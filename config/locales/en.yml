@@ -1,3 +1,13 @@
-# English strings go here for Rails i18n
 en:
-  # my_label: "My label"
+  redmine_ai_summary:
+    settings:
+      auto_generate: "Auto Generate Summary"
+      api_address: "API Address"
+      api_key: "API Key"
+    flash:
+      no_summary: "No AI summary available"
+    buttons:
+      summarize: "Summarize"
+      generate_summary: "Generate Summary"
+    headings:
+      ai_summary: "AI Summary"
