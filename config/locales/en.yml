@@ -4,10 +4,9 @@ en:
       auto_generate: "Auto Generate Summary"
       api_address: "API Address"
       api_key: "API Key"
-    flash:
-      no_summary: "No AI summary available"
     buttons:
-      summarize: "Summarize"
-      generate_summary: "Generate Summary"
-    headings:
+      generate_ai_summary: "Generate AI Summary"
+    labels:
       ai_summary: "AI Summary"
+    text:
+      no_ai_summary_available: "No AI summary available yet."
