@@ -1,0 +1,14 @@
+<div id="ai-summary">
+  <h3>AI Summary</h3>
+  <% latest_summary = @issue.issue_summaries.last %>
+  <% if latest_summary %>
+    <p><%= latest_summary.summary %></p>
+    <p><small>By <%= latest_summary.user&.name %> on <%= latest_summary.created_at&.strftime('%Y-%m-%d %H:%M') %></small></p>
+  <% else %>
+    <p>No summary available.</p>
+  <% end %>
+
+  <% if User.current.allowed_to?(:update_summaries, @project) %>
+    <%= button_to 'Generate Summary', issue_ai_summaries_path(@issue), method: :post, remote: true, class: 'button' %>
+  <% end %>
+</div>
