@@ -5,8 +5,12 @@ en:
       api_address: "API Address"
       api_key: "API Key"
     buttons:
-      generate_ai_summary: "Generate AI Summary"
+      generate_summary: "Generate Summary"
     labels:
-      ai_summary: "AI Summary"
+      issue_summary: "Issue Summary"
     text:
-      no_ai_summary_available: "No AI summary available yet."
+      no_summary_available: "No summary available yet."
+      generating_summary: "Generating summary..."
+    flash:
+      summary_created: "Summary created successfully."
+      summary_creation_failed: "Failed to create summary."
