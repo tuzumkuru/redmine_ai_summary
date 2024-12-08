@@ -14,9 +14,10 @@ Redmine::Plugin.register :redmine_ai_summary do
     'api_key' => ''
   }, partial: 'settings/ai_summary_settings'
 
-  # Define project module and permissions
-  project_module :ai_summary do |ai_summary|
-    ai_summary.permission :create_summaries, { ai_summaries: [:create] }
+  project_module :issue_tracking do |issue_tracking|
+    issue_tracking.permission :generate_issue_summary, { ai_summaries: [:create] }, 
+      public: false, 
+      read_component: :issues
   end
 
   # Load patches and hooks

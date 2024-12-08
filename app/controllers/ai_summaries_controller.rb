@@ -21,8 +21,10 @@ class AiSummariesController < ApplicationController
     )
     
     if @summary.save
+      Rails.logger.info "Summary created for issue ##{@issue.id} by User #{User.current.id}"
       flash[:notice] = t('redmine_ai_summary.flash.summary_created')
     else
+      Rails.logger.error "Failed to create summary for issue ##{@issue.id}: #{@summary.errors.full_messages.join(', ')}"
       flash[:error] = t('redmine_ai_summary.flash.summary_creation_failed')
     end
     
@@ -36,19 +38,20 @@ class AiSummariesController < ApplicationController
   end
 
   def check_view_permission
-    unless User.current.allowed_to?(:view_summaries, @issue.project)
-      render plain: "You do not have permission to view summaries.", status: :forbidden
+    unless User.current.allowed_to?(:view_issues, @issue.project)
+      render json: { error: "You do not have permission to view summaries." }, status: :forbidden
     end
   end
 
   def check_create_permission
-    unless User.current.allowed_to?(:create_summaries, @issue.project)
-      render plain: "You do not have permission to create summaries.", status: :forbidden
+    unless User.current.allowed_to?(:generate_issue_summary, @issue.project)
+      render json: { error: "You do not have permission to create summaries." }, status: :forbidden
     end
   end
 
   def generate_summary
     # Placeholder for actual AI service integration
+    # You would implement the logic here to call your AI service and generate the summary based on the issue context
     "This is a generated summary for issue ##{@issue.id}"
   end
 end

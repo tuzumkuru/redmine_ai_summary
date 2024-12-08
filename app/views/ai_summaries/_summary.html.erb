@@ -2,7 +2,7 @@
   <hr />
   <div class="description">
     <div class="contextual">
-      <% if User.current.allowed_to?(:create_summaries, @issue.project) %>
+       <% if User.current.allowed_to?(:generate_issue_summary, @issue.project) %>
         <%= link_to t('redmine_ai_summary.buttons.generate_summary'), issue_ai_summaries_path(@issue), method: :post, remote: true, class: 'icon icon-summary' %>
       <% end %>
     </div>
