@@ -1,4 +1,5 @@
 en:
+  
   redmine_ai_summary:
     settings:
       auto_generate: "Auto Generate Summary"
@@ -14,5 +15,6 @@ en:
     flash:
       summary_created: "Summary created successfully."
       summary_creation_failed: "Failed to create summary."
-    permissions:
-      generate_issue_summary: "Create AI Summary"
+
+  permission_generate_issue_summary: "Generate summary"
+    
