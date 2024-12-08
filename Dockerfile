@@ -9,5 +9,7 @@ RUN chown -R 999:999 /usr/src/redmine/sqlite
 
 WORKDIR /usr/src/redmine
 
+# COPY lib/tasks/create_test_data.rake lib/tasks/
+
 ENTRYPOINT [ "" ]
-CMD [ "/bin/sh", "-c", "rails db:migrate && rails redmine:plugins:migrate && rails server -e development -b 0.0.0.0" ]
+CMD [ "/bin/sh", "-c", "export RAILS_ENV=development &&  rails db:migrate && rails redmine:plugins:migrate && echo 'en' | rails redmine:load_default_data && rails server -e development -b 0.0.0.0" ]
