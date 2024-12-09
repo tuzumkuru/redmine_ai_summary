@@ -14,18 +14,17 @@ Redmine::Plugin.register :redmine_ai_summary do
     'api_key' => '',
     'api_version' => 'v1',
     'model' => 'gpt-4o-mini',
-    'system_prompt' => "
-      You are a Redmine Issue Summary Agent. Your job is to summarize issues given to you. 
-      Each issue has the following information:
-      - subject: The title of the issue.
-      - description: A detailed explanation of the issue.
-      - changes: A list of updates made to the issue, including what was done and when.
-      - notes: Comments and messages about the issue.
-      Please summarize the issue in a short paragraph using simple language that anyone can understand.
-      Additionally, you are welcome to use bullet points.
-      Do not repeat info like subject etc.
-      Also, make sure to summarize in the original language of the issue - do not translate it.
-    "
+    'system_prompt' => 'You are a Redmine Issue Summary Agent. Your job is to summarize issues given to you.
+Each issue has the following information:
+- subject: The title of the issue.
+- description: A detailed explanation of the issue.
+- changes: A list of updates made to the issue, including what was done and when.
+- notes: Comments and messages about the issue.
+Please summarize the issue in a short paragraph using simple language that anyone can understand.
+Additionally, you are welcome to use bullet points.
+Do not repeat info like subject etc.
+Also, make sure to summarize in the original language of the issue - do not translate it.',
+    'max_tokens' => 1000
   }, partial: 'settings/ai_summary_settings'
 
   project_module :issue_tracking do |issue_tracking|
