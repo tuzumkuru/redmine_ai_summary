@@ -1,11 +1,18 @@
 en:
-  
   redmine_ai_summary:
     settings:
-      auto_generate: "Auto Generate Summary"
+      auto_generate: "Auto Generate"
+      auto_generate_description: "Automatically regenerate summaries for outdated issues."
       api_address: "API Address"
+      api_address_description: "The URL of the API endpoint to use for generating summaries (default: https://api.openai.com)."
+      api_version: "API Version"
+      api_version_description: "The version of the API to use for generating summaries (default: v1)."
       api_key: "API Key"
+      api_key_description: "The API key to use for authenticating with the API endpoint."
       model: "Model"
+      model_description: "The AI model to use for generating summaries."
+      system_prompt: "System Prompt"
+      system_prompt_description: "The prompt to use when generating summaries. This should include instructions for the AI model on how to summarize the issue."
     buttons:
       generate_summary: "Generate Summary"
     labels:

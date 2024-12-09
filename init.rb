@@ -5,14 +5,27 @@ Redmine::Plugin.register :redmine_ai_summary do
   version '0.0.1'
   url 'https://github.com/tuzumkuru/redmine_ai_summary'
   author_url 'https://github.com/tuzumkuru'
-  requires_redmine '5.0'
+  requires_redmine :version_or_higher => '5.0.0'
 
   # Plugin settings
   settings default: {
     'auto_generate' => false,
-    'api_address' => '',
+    'api_address' => 'https://api.openai.com',
     'api_key' => '',
-    'model' => 'gpt-4o-mini' # Set the default model to gpt-4o-mini
+    'api_version' => 'v1',
+    'model' => 'gpt-4o-mini',
+    'system_prompt' => "
+      You are a Redmine Issue Summary Agent. Your job is to summarize issues given to you. 
+      Each issue has the following information:
+      - subject: The title of the issue.
+      - description: A detailed explanation of the issue.
+      - changes: A list of updates made to the issue, including what was done and when.
+      - notes: Comments and messages about the issue.
+      Please summarize the issue in a short paragraph using simple language that anyone can understand.
+      Additionally, you are welcome to use bullet points.
+      Do not repeat info like subject etc.
+      Also, make sure to summarize in the original language of the issue - do not translate it.
+    "
   }, partial: 'settings/ai_summary_settings'
 
   project_module :issue_tracking do |issue_tracking|

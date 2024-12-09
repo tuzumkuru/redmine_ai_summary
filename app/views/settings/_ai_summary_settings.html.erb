@@ -1,11 +1,24 @@
 <p><label for="auto_generate"><%= l(:'redmine_ai_summary.settings.auto_generate') %></label>
-<%= check_box_tag 'settings[auto_generate]', '1', Setting.plugin_redmine_ai_summary['auto_generate'] %></p>
+<%= check_box_tag 'settings[auto_generate]', '1', Setting.plugin_redmine_ai_summary['auto_generate'] %>
+<span class="description"><%= l(:'redmine_ai_summary.settings.auto_generate_description') %></span></p>
 
 <p><label for="api_address"><%= l(:'redmine_ai_summary.settings.api_address') %></label>
-<%= text_field_tag 'settings[api_address]', Setting.plugin_redmine_ai_summary['api_address'] %></p>
+<%= text_field_tag 'settings[api_address]', Setting.plugin_redmine_ai_summary['api_address'] %>
+<span class="description"><%= l(:'redmine_ai_summary.settings.api_address_description') %></span></p>
 
 <p><label for="api_key"><%= l(:'redmine_ai_summary.settings.api_key') %></label>
-<%= text_field_tag 'settings[api_key]', Setting.plugin_redmine_ai_summary['api_key'] %></p>
+<%= text_field_tag 'settings[api_key]', Setting.plugin_redmine_ai_summary['api_key'] %>
+<span class="description"><%= l(:'redmine_ai_summary.settings.api_key_description') %></span></p>
+
+<p><label for="api_version"><%= l(:'redmine_ai_summary.settings.api_version') %></label>
+<%= text_field_tag 'settings[api_version]', Setting.plugin_redmine_ai_summary['api_version'] %>
+<span class="description"><%= l(:'redmine_ai_summary.settings.api_version_description') %></span></p>
 
 <p><label for="model"><%= l(:'redmine_ai_summary.settings.model') %></label>
-<%= text_field_tag 'settings[model]', Setting.plugin_redmine_ai_summary['model'] %></p>
+<%= text_field_tag 'settings[model]', Setting.plugin_redmine_ai_summary['model'] %>
+<span class="description"><%= l(:'redmine_ai_summary.settings.model_description') %></span></p>
+
+<p><label for="system_prompt"><%= l(:'redmine_ai_summary.settings.system_prompt') %></label>
+<span class="description"><%= l(:'redmine_ai_summary.settings.system_prompt_description') %></span>
+<%= text_area_tag 'settings[system_prompt]', Setting.plugin_redmine_ai_summary['system_prompt'], rows: 10, cols: 50 %>
+</p>
