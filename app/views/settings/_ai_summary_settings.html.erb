@@ -6,3 +6,6 @@
 
 <p><label for="api_key"><%= l(:'redmine_ai_summary.settings.api_key') %></label>
 <%= text_field_tag 'settings[api_key]', Setting.plugin_redmine_ai_summary['api_key'] %></p>
+
+<p><label for="model"><%= l(:'redmine_ai_summary.settings.model') %></label>
+<%= text_field_tag 'settings[model]', Setting.plugin_redmine_ai_summary['model'] %></p>
