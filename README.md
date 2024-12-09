@@ -53,8 +53,9 @@
 The plugin provides several configuration options:
 
 - **Auto Generate**: Enables or disables auto-generated summaries.
-- **API Address**: Specify the address of the AI service if applicable.
-- **API Key**: Enter the API key for accessing the AI service.
+- **API Address**: Specify the address of your own AI service.
+- **API Key**: Enter the API key for accessing your AI service.
+- **Model**: Select the model to use for generating summaries (default is `gpt-4o-mini`).
 
 ### Accessing Settings
 

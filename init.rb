@@ -11,7 +11,8 @@ Redmine::Plugin.register :redmine_ai_summary do
   settings default: {
     'auto_generate' => false,
     'api_address' => '',
-    'api_key' => ''
+    'api_key' => '',
+    'model' => 'gpt-4o-mini' # Set the default model to gpt-4o-mini
   }, partial: 'settings/ai_summary_settings'
 
   project_module :issue_tracking do |issue_tracking|

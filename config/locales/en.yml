@@ -5,6 +5,7 @@ en:
       auto_generate: "Auto Generate Summary"
       api_address: "API Address"
       api_key: "API Key"
+      model: "Model"
     buttons:
       generate_summary: "Generate Summary"
     labels:
