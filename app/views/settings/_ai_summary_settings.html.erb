@@ -22,3 +22,7 @@
 <span class="description"><%= l(:'redmine_ai_summary.settings.system_prompt_description') %></span>
 <%= text_area_tag 'settings[system_prompt]', Setting.plugin_redmine_ai_summary['system_prompt'], rows: 10, cols: 50 %>
 </p>
+
+<p><label for="max_tokens"><%= l(:'redmine_ai_summary.settings.max_tokens') %></label>
+<%= text_field_tag 'settings[max_tokens]', Setting.plugin_redmine_ai_summary['max_tokens'] %>
+<span class="description"><%= l(:'redmine_ai_summary.settings.max_tokens_description') %></span></p>

@@ -52,8 +52,6 @@ class AiSummariesController < ApplicationController
   def generate_summary
     client = initialize_openai_client
 
-    system_prompt = Setting.plugin_redmine_ai_summary['system_prompt']
-
     # Create a JSON structure with the issue data for the user prompt
     issue_data = {
       subject: @issue.subject,
@@ -82,10 +80,10 @@ class AiSummariesController < ApplicationController
         parameters: {
           model: Setting.plugin_redmine_ai_summary['model'],
           messages: [
-            { role: "system", content: system_prompt },
+            { role: "system", content: Setting.plugin_redmine_ai_summary['system_prompt'] },
             { role: "user", content: user_prompt }
           ],
-          max_tokens: 1000
+          max_tokens: Setting.plugin_redmine_ai_summary['max_tokens'].to_i,
         }
       )
       

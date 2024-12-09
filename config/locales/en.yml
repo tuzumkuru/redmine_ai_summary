@@ -13,6 +13,8 @@ en:
       model_description: "The AI model to use for generating summaries."
       system_prompt: "System Prompt"
       system_prompt_description: "The prompt to use when generating summaries. This should include instructions for the AI model on how to summarize the issue."
+      max_tokens: "Max Tokens"
+      max_tokens_description: "The maximum number of tokens to generate for each summary."
     buttons:
       generate_summary: "Generate Summary"
     labels:
