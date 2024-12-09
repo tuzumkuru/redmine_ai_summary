@@ -24,6 +24,7 @@ WORKDIR /usr/src/redmine
 # Set up the entrypoint and commands
 CMD ["/bin/bash", "-c", " \
     export RAILS_ENV=development && \
+    bundle install && \
     rails db:migrate && \
     rails redmine:plugins:migrate && \
     echo 'en' | rails redmine:load_default_data && \
