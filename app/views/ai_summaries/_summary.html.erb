@@ -2,11 +2,19 @@
   <hr />
   <div class="description">
     <div class="contextual">
-       <% if User.current.allowed_to?(:generate_issue_summary, @issue.project) %>
-        <%= link_to t('redmine_ai_summary.buttons.generate_summary'), issue_ai_summaries_path(@issue), method: :post, remote: true, class: 'icon icon-summary' %>
+      <% if User.current.allowed_to?(:generate_issue_summary, @issue.project) %>
+        <%= link_to t('redmine_ai_summary.buttons.generate_summary'), 
+            issue_ai_summaries_path(@issue), 
+            method: :post, 
+            remote: true, 
+            class: 'icon icon-summary', 
+            data: { 
+              confirm: t('redmine_ai_summary.text.are_you_sure_generate_summary') # Optional confirmation
+            } %>
       <% end %>
     </div>
     <p><strong><%= t('redmine_ai_summary.labels.issue_summary') %></strong></p>
+
     <% latest_summary = @issue.issue_summaries.last %>
     <% if latest_summary %>
       <div class="wiki">

@@ -1,0 +1,10 @@
+<% if @summary.persisted? %>
+  // Show success message
+  alert("<%= j flash.now[:notice] %>");
+
+  // Replace the summary section with new summary content
+  $("#issue-summary").html("<%= j render(partial: 'ai_summaries/summary', locals: { latest_summary: @summary }) %>");
+<% else %>
+  // Show error message
+  alert("<%= j flash.now[:error] %>");
+<% end %>

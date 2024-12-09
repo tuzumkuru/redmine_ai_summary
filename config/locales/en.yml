@@ -12,9 +12,10 @@ en:
     text:
       no_summary_available: "No summary available yet."
       generating_summary: "Generating summary..."
+      are_you_sure_generate_summary: "Are you sure you want to generate a summary for this issue?"
+    notices:
     flash:
       summary_created: "Summary created successfully."
       summary_creation_failed: "Failed to create summary."
 
   permission_generate_issue_summary: "Generate summary"
-    
