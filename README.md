@@ -4,8 +4,8 @@
 2. [Features](#features)
 3. [Requirements](#requirements)
 4. [Installation](#installation)
-5. [Usage](#usage)
-6. [Configuration](#configuration)
+5. [Configuration](#configuration)
+6. [Usage](#usage)
 7. [Permissions](#permissions)
 8. [Localization](#localization)
 9. [Contributing](#contributing)
@@ -47,6 +47,20 @@ Redmine AI Summary Plugin is a plugin for Redmine that enables users to generate
 4. **Restart Redmine**:
    Restart your Redmine application to load the plugin.
 
+## Configuration
+The plugin provides several configuration options:
+* **Auto Generate**: Enables or disables auto-generated summaries (default is `false`).
+* **API Address**: Specify the address of your own AI service (default is `https://api.openai.com`).
+* **API Key**: Enter the API key for accessing your AI service.
+* **API Version**: Specifies the version of the API to use for generating summaries (default is `v1`).
+* **Model**: Select the model to use for generating summaries (default is `gpt-4o-mini`).
+* **System Prompt**: The prompt to use when generating summaries which gives the AI model instructions on how to summarize the issue.
+* **Max Tokens**: The maximum number of tokens to generate for each summary (default is `1000`).
+
+### Accessing Settings
+1. Go to **Administration > Plugins** in Redmine.
+2. Locate the **Redmine AI Summary Plugin** and configure your settings.
+
 ## Usage
 ### Generating a Summary
 1. Navigate to any issue within Redmine.
@@ -56,17 +70,6 @@ Redmine AI Summary Plugin is a plugin for Redmine that enables users to generate
 ### Viewing a Summary
 1. The most recent summary for each issue will be displayed on the issue details page.
 2. If no summary is available, a default message will indicate that no summary is present.
-
-## Configuration
-The plugin provides several configuration options:
-* **Auto Generate**: Enables or disables auto-generated summaries.
-* **API Address**: Specify the address of your own AI service.
-* **API Key**: Enter the API key for accessing your AI service.
-* **Model**: Select the model to use for generating summaries (default is `gpt-4o-mini`).
-
-### Accessing Settings
-1. Go to **Administration > Plugins** in Redmine.
-2. Locate the **Redmine AI Summary Plugin** and configure your settings.
 
 ## Permissions
 The following permission is available:
