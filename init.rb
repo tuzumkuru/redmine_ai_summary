@@ -27,10 +27,8 @@ Also, make sure to summarize in the original language of the issue - do not tran
     'max_tokens' => 1000
   }, partial: 'settings/ai_summary_settings'
 
-  project_module :issue_tracking do |issue_tracking|
-    issue_tracking.permission :generate_issue_summary, { ai_summaries: [:create] }, 
-      public: false, 
-      read_component: :issues
+  project_module :ai_summary do
+    permission :generate_issue_summary, { ai_summaries: [:create] }, public: false
   end
 
   # Load patches and hooks
