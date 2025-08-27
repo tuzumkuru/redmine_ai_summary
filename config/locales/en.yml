@@ -3,20 +3,19 @@ en:
     settings:
       auto_generate: "Auto Generate"
       auto_generate_description: "Automatically regenerate summaries for outdated issues."
-      api_address: "API Address"
-      api_address_description: "The URL of the API endpoint to use for generating summaries (default: https://api.openai.com)."
-      api_version: "API Version"
-      api_version_description: "The version of the API to use for generating summaries (default: v1)."
+      api_endpoint: "API Endpoint"
+      api_endpoint_description: "The URL of the API endpoint to use for generating summaries (default: https://api.openai.com/v1)."
       api_key: "API Key"
       api_key_description: "The API key to use for authenticating with the API endpoint."
       model: "Model"
       model_description: "The AI model to use for generating summaries."
       system_prompt: "System Prompt"
       system_prompt_description: "The prompt to use when generating summaries. This should include instructions for the AI model on how to summarize the issue."
-      max_tokens: "Max Tokens"
-      max_tokens_description: "The maximum number of tokens to generate for each summary."
+      max_completion_tokens: "Max Completion Tokens"
+      max_completion_tokens_description: "The maximum number of tokens the AI model should generate for a summary."
     buttons:
       generate_summary: "Generate Summary"
+      reset_prompt: "Reset to Default Prompt" # New key
     labels:
       issue_summary: "Issue Summary"
       created_by_on: "created by %{name} on %{date}"
@@ -25,6 +24,7 @@ en:
       no_summary_available: "No summary available yet."
       generating_summary: "Generating summary..."
       are_you_sure_generate_summary: "Are you sure you want to generate a summary for this issue?"
+      confirm_reset_prompt: "Are you sure you want to reset the system prompt to its default value? Your current custom prompt will be lost." # New key
     notices:
     flash:
       summary_created: "Summary created successfully."

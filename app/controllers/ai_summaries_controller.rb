@@ -73,7 +73,7 @@ class AiSummariesController < ApplicationController
             { role: "system", content: Setting.plugin_redmine_ai_summary['system_prompt'] },
             { role: "user", content: user_prompt }
           ],
-          max_tokens: Setting.plugin_redmine_ai_summary['max_tokens'].to_i,
+          max_completion_tokens: Setting.plugin_redmine_ai_summary['max_tokens'].to_i,
         }
       )
       
@@ -94,11 +94,8 @@ class AiSummariesController < ApplicationController
       log_errors: true
     }
 
-    api_address = Setting.plugin_redmine_ai_summary['api_address']
-    options[:uri_base] = api_address if api_address.present?
-
-    api_version = Setting.plugin_redmine_ai_summary['api_version']
-    options[:api_version] = api_version if api_version.present?
+    api_endpoint = Setting.plugin_redmine_ai_summary['api_endpoint']
+    options[:uri_base] = api_endpoint if api_endpoint.present?
 
     OpenAI::Client.new(options)
   end

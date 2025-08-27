@@ -3,20 +3,19 @@ tr:
     settings:
       auto_generate: "Otomatik Özet Oluştur"
       auto_generate_description: "Süresi dolmuş konular için özetleri otomatik olarak yeniden oluşturun."
-      api_address: "API Adresi"
-      api_address_description: "Özet oluşturmak için kullanılacak API uç noktasının URL'si (varsayılan: https://api.openai.com)."
-      api_version: "API Sürümü"
-      api_version_description: "Özet oluşturmak için kullanılacak API sürümü (varsayılan: v1)."
+      api_endpoint: "API Uç Noktası"
+      api_endpoint_description: "Özet oluşturmak için kullanılacak OpenAI uyumlu API uç noktasının URL'si (örn: https://api.openai.com/v1)."
       api_key: "API Anahtarı"
       api_key_description: "API uç noktasıyla kimlik doğrulaması için kullanılacak API anahtarı."
       model: "Model"
       model_description: "Özet oluşturmak için kullanılacak AI modeli."
       system_prompt: "Sistem istemi"
       system_prompt_description: "Özetler oluşturulurken kullanılacak istem. Bu, AI modeline konunun nasıl özetleneceğine dair talimatlar içermelidir."
-      max_tokens: "Maksimum Token"
-      max_tokens_description: "Her özet için oluşturulacak maksimum token sayısı."
+      max_completion_tokens: "Maksimum Tamamlama Token'ı"
+      max_completion_tokens_description: "AI modelinin bir özet için oluşturması gereken maksimum token sayısı."
     buttons:
       generate_summary: "Özet Oluştur"
+      reset_prompt: "Varsayılan İstem'e Sıfırla"
     labels:
       issue_summary: "Konu Özeti"
       created_by_on: "%{name} tarafından %{date} tarihinde oluşturuldu"
@@ -25,6 +24,7 @@ tr:
       no_summary_available: "Henüz özet mevcut değil."
       generating_summary: "Özet oluşturuluyor..."
       are_you_sure_generate_summary: "Bu konu için bir özet oluşturmak istediğinizden emin misiniz?"
+      confirm_reset_prompt: "Sistem istemini varsayılan değerine sıfırlamak istediğinizden emin misiniz? Mevcut özel isteminiz kaybolacaktır."
     notices:
     flash:
       summary_created: "Özet başarıyla oluşturuldu."

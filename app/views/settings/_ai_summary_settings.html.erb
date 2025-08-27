@@ -2,17 +2,14 @@
 <%= check_box_tag 'settings[auto_generate]', '1', Setting.plugin_redmine_ai_summary['auto_generate'] %>
 <span class="description"><%= l(:'redmine_ai_summary.settings.auto_generate_description') %></span></p>
 
-<p><label for="api_address"><%= l(:'redmine_ai_summary.settings.api_address') %></label>
-<%= text_field_tag 'settings[api_address]', Setting.plugin_redmine_ai_summary['api_address'] %>
-<span class="description"><%= l(:'redmine_ai_summary.settings.api_address_description') %></span></p>
+<p><label for="api_endpoint"><%= l(:'redmine_ai_summary.settings.api_endpoint') %></label>
+<%= text_field_tag 'settings[api_endpoint]', Setting.plugin_redmine_ai_summary['api_endpoint'] %>
+<span class="description"><%= l(:'redmine_ai_summary.settings.api_endpoint_description') %></span></p>
 
 <p><label for="api_key"><%= l(:'redmine_ai_summary.settings.api_key') %></label>
 <%= text_field_tag 'settings[api_key]', Setting.plugin_redmine_ai_summary['api_key'] %>
 <span class="description"><%= l(:'redmine_ai_summary.settings.api_key_description') %></span></p>
 
-<p><label for="api_version"><%= l(:'redmine_ai_summary.settings.api_version') %></label>
-<%= text_field_tag 'settings[api_version]', Setting.plugin_redmine_ai_summary['api_version'] %>
-<span class="description"><%= l(:'redmine_ai_summary.settings.api_version_description') %></span></p>
 
 <p><label for="model"><%= l(:'redmine_ai_summary.settings.model') %></label>
 <%= text_field_tag 'settings[model]', Setting.plugin_redmine_ai_summary['model'] %>
@@ -21,8 +18,28 @@
 <p><label for="system_prompt"><%= l(:'redmine_ai_summary.settings.system_prompt') %></label>
 <span class="description"><%= l(:'redmine_ai_summary.settings.system_prompt_description') %></span>
 <%= text_area_tag 'settings[system_prompt]', Setting.plugin_redmine_ai_summary['system_prompt'], rows: 10, cols: 50 %>
+<%= link_to l(:'redmine_ai_summary.buttons.reset_prompt'), '#',
+            id: 'reset-prompt-button',
+            class: 'button',
+            data: { default_prompt: Redmine::Plugin.find(:redmine_ai_summary).settings[:default]['system_prompt'] } %>
 </p>
 
-<p><label for="max_tokens"><%= l(:'redmine_ai_summary.settings.max_tokens') %></label>
-<%= text_field_tag 'settings[max_tokens]', Setting.plugin_redmine_ai_summary['max_tokens'] %>
-<span class="description"><%= l(:'redmine_ai_summary.settings.max_tokens_description') %></span></p>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const resetButton = document.getElementById('reset-prompt-button');
+  if (resetButton) {
+    resetButton.addEventListener('click', function(event) {
+      event.preventDefault();
+      const confirmMessage = this.dataset.confirm;
+      if (confirm(confirmMessage)) {
+        const defaultPrompt = this.dataset.defaultPrompt;
+        document.getElementById('settings_system_prompt').value = defaultPrompt;
+      }
+    });
+  }
+});
+</script>
+
+<p><label for="max_completion_tokens"><%= l(:'redmine_ai_summary.settings.max_completion_tokens') %></label>
+<%= text_field_tag 'settings[max_completion_tokens]', Setting.plugin_redmine_ai_summary['max_completion_tokens'] %>
+<span class="description"><%= l(:'redmine_ai_summary.settings.max_completion_tokens_description') %></span></p>
