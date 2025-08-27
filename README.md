@@ -24,6 +24,7 @@ Redmine AI Summary Plugin is a plugin for Redmine that enables users to generate
 
 ## Requirements
 * Redmine version 5.0 or later
+* **An OpenAI-compatible API endpoint for summary generation.**
 
 ## Installation
 1. **Clone the Plugin Repository**:
@@ -48,7 +49,8 @@ Redmine AI Summary Plugin is a plugin for Redmine that enables users to generate
    Restart your Redmine application to load the plugin.
 
 ## Configuration
-The plugin provides several configuration options:
+The plugin provides several configuration options, accessible after navigating to **Administration > Plugins** and locating the **Redmine AI Summary Plugin**.
+
 * **Auto Generate**: Enables or disables auto-generated summaries (default is `false`).
 * **API Address**: Specify the address of your own AI service (default is `https://api.openai.com`).
 * **API Key**: Enter the API key for accessing your AI service.
@@ -56,10 +58,6 @@ The plugin provides several configuration options:
 * **Model**: Select the model to use for generating summaries (default is `gpt-4o-mini`).
 * **System Prompt**: The prompt to use when generating summaries which gives the AI model instructions on how to summarize the issue.
 * **Max Tokens**: The maximum number of tokens to generate for each summary (default is `1000`).
-
-### Accessing Settings
-1. Go to **Administration > Plugins** in Redmine.
-2. Locate the **Redmine AI Summary Plugin** and configure your settings.
 
 ## Usage
 ### Generating a Summary
@@ -88,7 +86,7 @@ This plugin is licensed under the MIT License. See the [LICENSE](LICENSE) file f
 For support, please open an issue on the GitHub repository, and we will do our best to assist you.
 
 ## Roadmap and Future Development
-This is the initial working version of the Redmine AI Summary Plugin. As such, it may contain minor errors or inconsistencies. I will continue to improve the plugin, fixing any issues that arise. Your feedback is appreciated and will help shape the future of this plugin.
+This is the initial working version of the Redmine AI Summary Plugin. As such, it may contain minor errors or inconsistencies. I will continue to improve the plugin, fixing any issues that arise. **An auto-generation feature for summaries will be added in a future release.** Your feedback is appreciated and will help shape the future of this plugin.
 
 ---
 Thank you for using the Redmine AI Summary Plugin!
