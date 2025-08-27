@@ -16,7 +16,13 @@ class AiSummariesController < ApplicationController
 
     # Update the summary content
     @summary.summary = summary_content
-    @summary.created_by = User.current.id
+
+    if @summary.new_record?
+      @summary.created_by = User.current.id
+    else
+      @summary.updated_at = Time.now
+      @summary.updated_by = User.current.id
+    end
 
     if @summary.save
       Rails.logger.info "Summary saved/updated for issue ##{@issue.id} by User #{User.current.id}"

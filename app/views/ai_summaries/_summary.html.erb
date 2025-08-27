@@ -19,7 +19,13 @@
     <% if latest_summary %>
       <div class="wiki">
         <%= textilizable latest_summary.summary %>
-        <p><small>By <%= latest_summary.user&.name %> on <%= latest_summary.created_at&.strftime('%Y-%m-%d %H:%M') %></small></p>
+        <p><small>
+          <% if latest_summary.updated_by.present? %>
+            <%= t('redmine_ai_summary.labels.updated_by_on', name: latest_summary.user&.name, date: latest_summary.updated_at&.strftime('%Y-%m-%d %H:%M')) %>
+          <% else %>
+            <%= t('redmine_ai_summary.labels.created_by_on', name: latest_summary.user&.name, date: latest_summary.created_at&.strftime('%Y-%m-%d %H:%M')) %>
+          <% end %>
+        </small></p>
       </div>
     <% else %>
       <p><%= t('redmine_ai_summary.text.no_summary_available') %></p>

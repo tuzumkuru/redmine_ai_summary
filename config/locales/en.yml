@@ -19,6 +19,8 @@ en:
       generate_summary: "Generate Summary"
     labels:
       issue_summary: "Issue Summary"
+      created_by_on: "created by %{name} on %{date}"
+      updated_by_on: "updated by %{name} on %{date}"
     text:
       no_summary_available: "No summary available yet."
       generating_summary: "Generating summary..."

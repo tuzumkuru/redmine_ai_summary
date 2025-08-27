@@ -1,8 +1,8 @@
 tr:
   redmine_ai_summary:
     settings:
-      auto_generate: "Otomatik Oluştur"
-      auto_generate_description: "Güncel olmayan kayıtlar için özetleri otomatik olarak yeniden oluştur."
+      auto_generate: "Otomatik Özet Oluştur"
+      auto_generate_description: "Süresi dolmuş konular için özetleri otomatik olarak yeniden oluşturun."
       api_address: "API Adresi"
       api_address_description: "Özet oluşturmak için kullanılacak API uç noktasının URL'si (varsayılan: https://api.openai.com)."
       api_version: "API Sürümü"
@@ -12,17 +12,19 @@ tr:
       model: "Model"
       model_description: "Özet oluşturmak için kullanılacak AI modeli."
       system_prompt: "Sistem istemi"
-      system_prompt_description: "Özetler oluşturulurken kullanılacak istem. Bu, AI modeline konunun nasıl özetleneceğine ilişkin talimatları içermelidir."
+      system_prompt_description: "Özetler oluşturulurken kullanılacak istem. Bu, AI modeline konunun nasıl özetleneceğine dair talimatlar içermelidir."
       max_tokens: "Maksimum Token"
       max_tokens_description: "Her özet için oluşturulacak maksimum token sayısı."
     buttons:
       generate_summary: "Özet Oluştur"
     labels:
-      issue_summary: "Kayıt Özeti"
+      issue_summary: "Konu Özeti"
+      created_by_on: "%{name} tarafından %{date} tarihinde oluşturuldu"
+      updated_by_on: "%{name} tarafından %{date} tarihinde güncellendi"
     text:
       no_summary_available: "Henüz özet mevcut değil."
       generating_summary: "Özet oluşturuluyor..."
-      are_you_sure_generate_summary: "Bu kayıt için bir özet oluşturmak istediğinizden emin misiniz?"
+      are_you_sure_generate_summary: "Bu konu için bir özet oluşturmak istediğinizden emin misiniz?"
     notices:
     flash:
       summary_created: "Özet başarıyla oluşturuldu."
