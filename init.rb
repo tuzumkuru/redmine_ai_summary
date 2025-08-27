@@ -2,7 +2,7 @@ Redmine::Plugin.register :redmine_ai_summary do
   name 'Redmine AI Summary Plugin'
   author 'Tolga Uzun'
   description 'A plugin for generating AI summaries on issues.'
-  version '0.0.1'
+  version '0.1.0'
   url 'https://github.com/tuzumkuru/redmine_ai_summary'
   author_url 'https://github.com/tuzumkuru'
   requires_redmine :version_or_higher => '5.0.0'
