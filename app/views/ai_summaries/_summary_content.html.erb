@@ -1,0 +1,35 @@
+<div id="issue-summary">
+  <hr />
+  <div class="description">
+    <div class="contextual">
+      <% if User.current.allowed_to?(:generate_issue_summary, @issue.project) %>
+        <%= link_to t('redmine_ai_summary.buttons.generate_summary'), 
+            issue_ai_summaries_path(@issue), 
+            method: :post, 
+            remote: true, 
+            class: 'icon icon-summary', 
+            id: 'generate-summary-button',
+            data: { 
+              confirm: t('redmine_ai_summary.text.are_you_sure_generate_summary') # Optional confirmation
+            } %>
+      <% end %>
+    </div>
+    <p><strong><%= t('redmine_ai_summary.labels.issue_summary') %></strong></p>
+
+    <% latest_summary = @issue.issue_summaries.last %>
+    <% if latest_summary %>
+      <div class="wiki">
+        <%= textilizable latest_summary.summary %>
+        <p><small>
+          <% if latest_summary.updated_by.present? %>
+            <%= t('redmine_ai_summary.labels.updated_by_on', name: latest_summary.user&.name, date: latest_summary.updated_at&.strftime('%Y-%m-%d %H:%M')) %>
+          <% else %>
+            <%= t('redmine_ai_summary.labels.created_by_on', name: latest_summary.user&.name, date: latest_summary.created_at&.strftime('%Y-%m-%d %H:%M')) %>
+          <% end %>
+        </small></p>
+      </div>
+    <% else %>
+      <p><%= t('redmine_ai_summary.text.no_summary_available') %></p>
+    <% end %>
+  </div>
+</div>

@@ -5,16 +5,12 @@ class AiSummariesController < ApplicationController
   def create
     summary_content = generate_summary
 
-    # Return an error if summary generation fails
     if summary_content.is_a?(String) && summary_content.start_with?("Error:")
-      flash[:error] = summary_content
-      Rails.logger.error "Failed to generate summary: #{summary_content}"
-      redirect_to issue_path(@issue) and return
+      handle_error(summary_content)
+      return
     end
 
     @summary = IssueSummary.find_or_initialize_by(issue_id: @issue.id)
-
-    # Update the summary content
     @summary.summary = summary_content
 
     if @summary.new_record?
@@ -25,21 +21,9 @@ class AiSummariesController < ApplicationController
     end
 
     if @summary.save
-      Rails.logger.info "Summary saved/updated for issue ##{@issue.id} by User #{User.current.id}"
-      flash[:notice] = t('redmine_ai_summary.flash.summary_created')
-
-      respond_to do |format|
-        format.js   # Render create.js.erb for AJAX requests
-        format.html { redirect_to issue_path(@issue) }  # Redirect for non-AJAX requests
-      end
+      handle_success
     else
-      Rails.logger.error "Failed to save/update summary for issue ##{@issue.id}: #{@summary.errors.full_messages.join(', ')}"
-      flash[:error] = t('redmine_ai_summary.flash.summary_creation_failed')
-
-      respond_to do |format|
-        format.js { render json: { error: @summary.errors.full_messages }, status: :unprocessable_entity }
-        format.html { redirect_to issue_path(@issue) }
-      end
+      handle_error(@summary.errors.full_messages)
     end
   end
 
@@ -97,10 +81,10 @@ class AiSummariesController < ApplicationController
 
     rescue Faraday::UnauthorizedError => e
       Rails.logger.error "Unauthorized access: #{e.message}"
-      "Error: Failed to generate summary: Invalid API key or API address."
+      "Error: Invalid API key or API address: #{e.message}"
     rescue StandardError => e
       Rails.logger.error "Error generating summary: #{e.message}"
-      "Error: An error occurred while generating the summary."
+      "Error: An error occurred while generating the summary: #{e.message}"
     end
   end
 
@@ -117,5 +101,25 @@ class AiSummariesController < ApplicationController
     options[:api_version] = api_version if api_version.present?
 
     OpenAI::Client.new(options)
+  end
+
+  def handle_success
+    Rails.logger.info "Summary saved/updated for issue ##{@issue.id} by User #{User.current.id}"
+    respond_to do |format|
+      format.js   # Render create.js.erb for AJAX requests
+      format.html { redirect_to issue_path(@issue) }
+    end
+  end
+
+  def handle_error(errors)
+    @errors = Array.wrap(errors)
+    Rails.logger.error "Failed to generate summary for issue ##{@issue.id}: #{@errors.join(', ')}"
+    respond_to do |format|
+      format.js { render json: { error: @errors }, status: :unprocessable_entity }
+      format.html do
+        flash[:error] = @errors.join(', ')
+        redirect_to issue_path(@issue)
+      end
+    end
   end
 end
