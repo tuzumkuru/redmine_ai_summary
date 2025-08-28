@@ -4,7 +4,7 @@ tr:
       auto_generate: "Otomatik Özet Oluştur"
       auto_generate_description: "Süresi dolmuş konular için özetleri otomatik olarak yeniden oluşturun."
       api_endpoint: "API Uç Noktası"
-      api_endpoint_description: "Özet oluşturmak için kullanılacak OpenAI uyumlu API uç noktasının URL'si (örn: https://api.openai.com/v1)."
+      api_endpoint_description: "Özet oluşturmak için kullanılacak OpenAI uyumlu API uç noktasının URL'si. OpenAI API için boş bırakabilirsiniz."
       api_key: "API Anahtarı"
       api_key_description: "API uç noktasıyla kimlik doğrulaması için kullanılacak API anahtarı."
       model: "Model"
@@ -12,7 +12,8 @@ tr:
       system_prompt: "Sistem istemi"
       system_prompt_description: "Özetler oluşturulurken kullanılacak istem. Bu, AI modeline konunun nasıl özetleneceğine dair talimatlar içermelidir."
       max_completion_tokens: "Maksimum Tamamlama Token'ı"
-      max_completion_tokens_description: "AI modelinin bir özet için oluşturması gereken maksimum token sayısı."
+      max_completion_tokens_description: "AI modelinin bir özet için oluşturabileceği maksimum token sayısı."
+      confirm_reset_prompt: "Sistem istemini varsayılan değerine sıfırlamak istediğinizden emin misiniz? Mevcut özel isteminiz kaybolacaktır."
     buttons:
       generate_summary: "Özet Oluştur"
       reset_prompt: "Varsayılan İstem'e Sıfırla"
@@ -24,7 +25,6 @@ tr:
       no_summary_available: "Henüz özet mevcut değil."
       generating_summary: "Özet oluşturuluyor..."
       are_you_sure_generate_summary: "Bu konu için bir özet oluşturmak istediğinizden emin misiniz?"
-      confirm_reset_prompt: "Sistem istemini varsayılan değerine sıfırlamak istediğinizden emin misiniz? Mevcut özel isteminiz kaybolacaktır."
     notices:
     flash:
       summary_created: "Özet başarıyla oluşturuldu."

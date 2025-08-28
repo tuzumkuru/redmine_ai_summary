@@ -21,7 +21,10 @@
 <%= link_to l(:'redmine_ai_summary.buttons.reset_prompt'), '#',
             id: 'reset-prompt-button',
             class: 'button',
-            data: { default_prompt: Redmine::Plugin.find(:redmine_ai_summary).settings[:default]['system_prompt'] } %>
+            data: {
+                    default_prompt: Redmine::Plugin.find(:redmine_ai_summary).settings[:default]['system_prompt'],
+                    message: l(:'redmine_ai_summary.settings.confirm_reset_prompt')
+                  } %>
 </p>
 
 <script>
@@ -30,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
   if (resetButton) {
     resetButton.addEventListener('click', function(event) {
       event.preventDefault();
-      const confirmMessage = this.dataset.confirm;
+      const confirmMessage = this.dataset.message;
       if (confirm(confirmMessage)) {
         const defaultPrompt = this.dataset.defaultPrompt;
         document.getElementById('settings_system_prompt').value = defaultPrompt;
