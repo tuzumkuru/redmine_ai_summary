@@ -6,6 +6,7 @@ module RedmineAiSummary
       issue_data = {
         subject: issue.subject,
         description: issue.description,
+        text_formatting: Setting.text_formatting,
         changes: issue.changesets.map do |changeset|
           {
             id: changeset.id,
@@ -16,8 +17,17 @@ module RedmineAiSummary
         notes: issue.journals.map do |journal|
           {
             id: journal.id,
+            user: journal.user.login,
             notes: journal.notes,
-            created_on: journal.created_on
+            created_on: journal.created_on,
+            details: journal.details.map do |detail|
+              {
+                property: detail.property,
+                prop_key: detail.prop_key,
+                old_value: detail.old_value,
+                value: detail.value
+              }
+            end
           }
         end
       }

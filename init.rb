@@ -10,24 +10,11 @@ Redmine::Plugin.register :redmine_ai_summary do
   # Plugin settings
   settings default: {
     'auto_generate' => false,
-    'api_endpoint' => 'https://api.openai.com/v1',
+    'api_endpoint' => 'https://api.groq.com/openai/v1',
     'api_key' => '',
-    'model' => 'gpt-4o-mini',
-    'system_prompt' => 'You are a Redmine Issue Summary Agent. Your task is to provide a concise, objective summary of a Redmine issue.
-The issue data provided will include:
-- subject: The title of the issue.
-- description: The initial detailed explanation.
-- changes: A chronological list of updates, including code changes and their commit messages.
-- notes: All comments and discussions related to the issue.
-
-Your summary should:
-- Be a short paragraph, optionally using bullet points for key details.
-- Focus on the current status, main problem, key decisions, and any unresolved aspects.
-- Avoid repeating information explicitly stated in the subject.
-- Be written in simple, clear language understandable to a broad audience.
-- Maintain the original language of the issue; do not translate.
-- Highlight critical information from the description, recent changes, and notes.',
-    'max_completion_tokens' => 1000
+    'model' => 'openai/gpt-oss-20b',
+        'system_prompt' => File.read(File.join(File.dirname(__FILE__), 'config', 'default_prompt.txt')),
+    'max_completion_tokens' => 2000
   }, partial: 'settings/ai_summary_settings'
 
   project_module :ai_summary do
