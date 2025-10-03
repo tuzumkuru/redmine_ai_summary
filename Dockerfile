@@ -1,4 +1,4 @@
-FROM redmine:5.1-bookworm
+FROM redmine:6
 
 # Install required packages
 RUN apt update && apt install -y gcc make supervisor
