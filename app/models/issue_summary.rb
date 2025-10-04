@@ -4,4 +4,5 @@ class IssueSummary < ActiveRecord::Base
   belongs_to :updater, class_name: 'User', foreign_key: :updated_by, optional: true
 
   validates :summary, presence: true
+  validates :issue_id, uniqueness: true
 end
