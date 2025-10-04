@@ -42,6 +42,8 @@ module RedmineAiSummary
               { role: "system", content: Setting.plugin_redmine_ai_summary['system_prompt'] },
               { role: "user", content: user_prompt }
             ],
+            # Provide multiple token limit keys for cross-provider compatibility (avoid Responses-only keys)
+            max_tokens: Setting.plugin_redmine_ai_summary['max_completion_tokens'].to_i,
             max_completion_tokens: Setting.plugin_redmine_ai_summary['max_completion_tokens'].to_i,
           }
         )
