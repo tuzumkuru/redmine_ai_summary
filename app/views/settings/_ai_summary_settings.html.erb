@@ -2,6 +2,10 @@
 <%= check_box_tag 'settings[auto_generate]', '1', Setting.plugin_redmine_ai_summary['auto_generate'] %>
 <span class="description"><%= l(:'redmine_ai_summary.settings.auto_generate_description') %></span></p>
 
+<p><label for="auto_requires_existing_summary"><%= l(:'redmine_ai_summary.settings.auto_requires_existing_summary') %></label>
+<%= check_box_tag 'settings[auto_requires_existing_summary]', '1', Setting.plugin_redmine_ai_summary['auto_requires_existing_summary'] %>
+<span class="description"><%= l(:'redmine_ai_summary.settings.auto_requires_existing_summary_description') %></span></p>
+
 <p><label for="api_endpoint"><%= l(:'redmine_ai_summary.settings.api_endpoint') %></label>
 <%= text_field_tag 'settings[api_endpoint]', Setting.plugin_redmine_ai_summary['api_endpoint'] %>
 <span class="description"><%= l(:'redmine_ai_summary.settings.api_endpoint_description') %></span></p>

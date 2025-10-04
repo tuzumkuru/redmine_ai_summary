@@ -14,6 +14,8 @@ tr:
       max_completion_tokens: "Maksimum Tamamlama Token'ı"
       max_completion_tokens_description: "AI modelinin bir özet için oluşturabileceği maksimum token sayısı."
       confirm_reset_prompt: "Sistem istemini varsayılan değerine sıfırlamak istediğinizden emin misiniz? Mevcut özel isteminiz kaybolacaktır."
+      auto_requires_existing_summary: "Yalnızca özet mevcutsa otomatik oluştur"
+      auto_requires_existing_summary_description: "Etkinleştirildiğinde, otomatik oluşturma yalnızca konu için en az bir kez manuel özet oluşturulduktan sonra çalışır."
     buttons:
       generate_summary: "Özet Oluştur"
       reset_prompt: "Varsayılan İstem'e Sıfırla"

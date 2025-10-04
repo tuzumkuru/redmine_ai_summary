@@ -10,10 +10,11 @@ Redmine::Plugin.register :redmine_ai_summary do
   # Plugin settings
   settings default: {
     'auto_generate' => false,
+    'auto_requires_existing_summary' => false,
     'api_endpoint' => 'https://api.groq.com/openai/v1',
     'api_key' => '',
     'model' => 'openai/gpt-oss-20b',
-        'system_prompt' => File.read(File.join(File.dirname(__FILE__), 'config', 'default_prompt.txt')),
+    'system_prompt' => File.read(File.join(File.dirname(__FILE__), 'config', 'default_prompt.txt')),
     'max_completion_tokens' => 2000
   }, partial: 'settings/ai_summary_settings'
 

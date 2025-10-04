@@ -14,6 +14,8 @@ en:
       max_completion_tokens: "Max Completion Tokens"
       max_completion_tokens_description: "The maximum number of tokens the AI model can generate for a summary."
       confirm_reset_prompt: "Are you sure you want to reset the system prompt to its default value? Your current custom prompt will be lost."
+      auto_requires_existing_summary: "Auto-generate only if a summary exists"
+      auto_requires_existing_summary_description: "If enabled, automatic generation runs only after a manual summary was created at least once for the issue."
     buttons:
       generate_summary: "Generate Summary"
       reset_prompt: "Reset to Default Prompt"
