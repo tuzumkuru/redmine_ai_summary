@@ -11,7 +11,19 @@ module RedmineAiSummary
             return unless self.journalized_type == 'Issue' && self.notes.present?
             return unless Setting.plugin_redmine_ai_summary['auto_generate'] == '1'
 
-            RedmineAiSummary::SummaryGenerator.generate(self.journalized)
+            issue = self.journalized
+            return unless issue.is_a?(Issue)
+
+            # Only run if the AI Summary module is enabled on the project
+            return unless issue.project&.module_enabled?(:ai_summary)
+
+            # Optional setting: require that a manual summary exists before auto-generating
+            if Setting.plugin_redmine_ai_summary['auto_requires_existing_summary'] == '1'
+              existing = IssueSummary.find_by(issue_id: issue.id)
+              return unless existing.present?
+            end
+
+            RedmineAiSummary::SummaryGenerator.generate(issue)
           end
         end
       end
