@@ -23,9 +23,11 @@ Redmine::Plugin.register :redmine_ai_summary do
   end
 
   # Load patches and hooks
+  require_dependency File.expand_path('lib/redmine_ai_summary/constants', __dir__)
   require_dependency File.expand_path('lib/redmine_ai_summary/hooks', __dir__)
   require_dependency File.expand_path('lib/redmine_ai_summary/summary_generator', __dir__)
   require_dependency File.expand_path('lib/redmine_ai_summary/patches/issue_patch', __dir__)
   require_dependency File.expand_path('lib/redmine_ai_summary/patches/journal_patch', __dir__)
+  require_dependency File.expand_path('lib/redmine_ai_summary/patches/plugins_controller_patch', __dir__)
 
 end

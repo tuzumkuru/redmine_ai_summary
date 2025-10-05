@@ -10,9 +10,11 @@
 <%= text_field_tag 'settings[api_endpoint]', Setting.plugin_redmine_ai_summary['api_endpoint'] %>
 <span class="description"><%= l(:'redmine_ai_summary.settings.api_endpoint_description') %></span></p>
 
+<% sentinel = RedmineAiSummary::Constants::API_KEY_SENTINEL %>
 <p><label for="api_key"><%= l(:'redmine_ai_summary.settings.api_key') %></label>
-<%= text_field_tag 'settings[api_key]', Setting.plugin_redmine_ai_summary['api_key'] %>
+<%= password_field_tag 'settings[api_key]', (Setting.plugin_redmine_ai_summary['api_key'].present? ? sentinel : nil), autocomplete: 'off' %>
 <span class="description"><%= l(:'redmine_ai_summary.settings.api_key_description') %></span></p>
+
 
 
 <p><label for="model"><%= l(:'redmine_ai_summary.settings.model') %></label>
@@ -44,6 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   }
+
 });
 </script>
 
