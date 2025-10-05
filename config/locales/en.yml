@@ -26,6 +26,7 @@ en:
     text:
       no_summary_available: "No summary available yet."
       generating_summary: "Generating summary..."
+      summary_is_stale: "The summary is outdated and needs to be regenerated."
       are_you_sure_generate_summary: "Are you sure you want to generate a summary for this issue?"
     notices:
     flash:

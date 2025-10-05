@@ -1,32 +1,41 @@
-<div id="issue-summary">
+<% summary = @issue.issue_summary %>
+<div id="issue-summary" data-status="<%= summary&.status || 'new' %>">
   <hr />
   <div class="description">
     <div class="contextual">
       <% if User.current.allowed_to?(:generate_issue_summary, @issue.project) %>
-        <%= link_to t('redmine_ai_summary.buttons.generate_summary'), 
-            issue_ai_summaries_path(@issue), 
-            method: :post, 
-            remote: true, 
-            class: 'icon icon-summary', 
+        <%= link_to t('redmine_ai_summary.buttons.generate_summary'),
+            issue_ai_summaries_path(@issue),
+            method: :post,
+            remote: true,
+            class: 'icon icon-summary',
             id: 'generate-summary-button',
-            data: { 
-              confirm: t('redmine_ai_summary.text.are_you_sure_generate_summary') # Optional confirmation
-            } %>
+            disabled: summary&.status == 'generating' %>
       <% end %>
     </div>
     <p><strong><%= t('redmine_ai_summary.labels.issue_summary') %></strong></p>
 
-    <% latest_summary = @issue.issue_summaries.last %>
-    <% if latest_summary %>
+    <% if summary %>
       <div class="wiki">
-        <%= textilizable latest_summary.summary %>
-        <p><small>
-          <% if latest_summary.updated_by.present? %>
-            <%= t('redmine_ai_summary.labels.updated_by_on', name: latest_summary.updater&.name, date: latest_summary.updated_at&.strftime('%Y-%m-%d %H:%M')) %>
-          <% else %>
-            <%= t('redmine_ai_summary.labels.created_by_on', name: latest_summary.creator&.name, date: latest_summary.created_at&.strftime('%Y-%m-%d %H:%M')) %>
-          <% end %>
-        </small></p>
+        <% case summary.status %>
+        <% when 'generating' %>
+          <p><%= t('redmine_ai_summary.text.generating_summary') %></p>
+        <% when 'stale' %>
+          <p class="warning"><%= t('redmine_ai_summary.text.summary_is_stale') %></p>
+          <%= textilizable summary.summary if summary.summary.present? %>
+          <p><small>
+            <%= t('redmine_ai_summary.labels.updated_by_on', name: summary.updater&.name, date: summary.updated_at&.strftime('%Y-%m-%d %H:%M')) %>
+          </small></p>
+        <% when 'up_to_date' %>
+          <%= textilizable summary.summary %>
+          <p><small>
+            <% if summary.updated_by.present? %>
+              <%= t('redmine_ai_summary.labels.updated_by_on', name: summary.updater&.name, date: summary.updated_at&.strftime('%Y-%m-%d %H:%M')) %>
+            <% else %>
+              <%= t('redmine_ai_summary.labels.created_by_on', name: summary.creator&.name, date: summary.created_at&.strftime('%Y-%m-%d %H:%M')) %>
+            <% end %>
+          </small></p>
+        <% end %>
       </div>
     <% else %>
       <p><%= t('redmine_ai_summary.text.no_summary_available') %></p>

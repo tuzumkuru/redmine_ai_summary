@@ -1,33 +1,34 @@
-<style>
-  .disabled {
-    pointer-events: none;
-    opacity: 0.5;
-  }
-</style>
-
 <div id="issue-summary-container">
   <%= render partial: 'ai_summaries/summary_content', locals: { issue: @issue } %>
 </div>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    document.body.addEventListener('ajax:beforeSend', function(event) {
-      if (event.target.id === 'generate-summary-button') {
-        event.target.innerText = '<%= t("redmine_ai_summary.text.generating_summary") %>';
-        event.target.classList.add('disabled');
-      }
-    });
+  (function() {
+    var container = document.getElementById('issue-summary-container');
+    var issueId = <%= @issue.id %>;
+    var initialStatus = container.querySelector('#issue-summary').dataset.status;
 
-    document.body.addEventListener('ajax:complete', function(event) {
-      if (event.target.id === 'generate-summary-button') {
-        event.target.innerText = '<%= t("redmine_ai_summary.buttons.generate_summary") %>';
-        event.target.classList.remove('disabled');
-
-        if (event.detail[0].status !== 200) {
-          var errors = JSON.parse(event.detail[0].responseText).error;
-          alert(errors.join('\n'));
-        }
+    function pollSummaryStatus() {
+      if (document.hidden) {
+        return;
       }
-    });
-  });
+
+      var currentStatus = container.querySelector('#issue-summary').dataset.status;
+      if (currentStatus === 'up_to_date') {
+        return;
+      }
+
+      fetch('/issues/' + issueId + '/ai_summaries/content')
+        .then(function(response) {
+          return response.text();
+        })
+        .then(function(html) {
+          container.innerHTML = html;
+        });
+    }
+
+    if (initialStatus === 'generating' || initialStatus === 'stale') {
+      setInterval(pollSummaryStatus, 5000);
+    }
+  })();
 </script>

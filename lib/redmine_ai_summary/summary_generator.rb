@@ -1,6 +1,6 @@
 module RedmineAiSummary
   class SummaryGenerator
-    def self.generate(issue)
+    def self.generate(issue, user)
       client = initialize_openai_client
 
       issue_data = {
@@ -54,10 +54,10 @@ module RedmineAiSummary
         summary.summary = summary_content
 
         if summary.new_record?
-          summary.created_by = User.current.id
+          summary.created_by = user.id
         else
           summary.updated_at = Time.now
-          summary.updated_by = User.current.id
+          summary.updated_by = user.id
         end
 
         if summary.save

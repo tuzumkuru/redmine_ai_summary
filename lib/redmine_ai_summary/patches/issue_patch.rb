@@ -3,7 +3,14 @@ module RedmineAiSummary
     module IssuePatch
       def self.included(base)
         base.class_eval do
-          has_many :issue_summaries
+          has_one :issue_summary, dependent: :destroy
+          after_save :generate_summary_after_update
+        end
+      end
+
+      def generate_summary_after_update
+        if Setting.plugin_redmine_ai_summary['generate_on_update'].to_s == '1' && issue_summary.present?
+          issue_summary.update(status: 'stale')
         end
       end
     end
