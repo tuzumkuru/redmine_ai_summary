@@ -27,6 +27,7 @@ tr:
       no_summary_available: "Henüz özet mevcut değil."
       generating_summary: "Özet oluşturuluyor..."
       summary_is_stale: "Özet güncel değil ve yeniden oluşturulması gerekiyor."
+      summary_is_old: "(Eski)"
       are_you_sure_generate_summary: "Bu konu için bir özet oluşturmak istediğinizden emin misiniz?"
     notices:
     flash:

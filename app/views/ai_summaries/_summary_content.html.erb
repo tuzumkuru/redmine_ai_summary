@@ -10,35 +10,37 @@
             remote: true,
             class: 'icon icon-summary',
             id: 'generate-summary-button',
-            disabled: summary&.status == 'generating' %>
+            disabled: summary&.status == 'generating',
+            data: { confirm: t('redmine_ai_summary.text.are_you_sure_generate_summary') } %>
       <% end %>
     </div>
-    <p><strong><%= t('redmine_ai_summary.labels.issue_summary') %></strong></p>
+    <p>
+      <strong><%= t('redmine_ai_summary.labels.issue_summary') %></strong>
+      <% if summary&.status == 'generating' %>
+        <small class="generating-text"><%= t('redmine_ai_summary.text.generating_summary') %></small>
+      <% elsif summary&.up_to_date? && !summary&.recent? %>
+        <small class="generating-text"><%= t('redmine_ai_summary.text.summary_is_old') %></small>
+      <% end %>
+    </p>
 
-    <% if summary %>
-      <div class="wiki">
-        <% case summary.status %>
-        <% when 'generating' %>
-          <p><%= t('redmine_ai_summary.text.generating_summary') %></p>
-        <% when 'stale' %>
+    <% if summary&.summary.present? %>
+      <div class="wiki <%= 'summary-stale' if ['generating', 'stale'].include?(summary.status) %>">
+        <% if summary.status == 'stale' %>
           <p class="warning"><%= t('redmine_ai_summary.text.summary_is_stale') %></p>
-          <%= textilizable summary.summary if summary.summary.present? %>
-          <p><small>
-            <%= t('redmine_ai_summary.labels.updated_by_on', name: summary.updater&.name, date: summary.updated_at&.strftime('%Y-%m-%d %H:%M')) %>
-          </small></p>
-        <% when 'up_to_date' %>
-          <%= textilizable summary.summary %>
-          <p><small>
-            <% if summary.updated_by.present? %>
-              <%= t('redmine_ai_summary.labels.updated_by_on', name: summary.updater&.name, date: summary.updated_at&.strftime('%Y-%m-%d %H:%M')) %>
-            <% else %>
-              <%= t('redmine_ai_summary.labels.created_by_on', name: summary.creator&.name, date: summary.created_at&.strftime('%Y-%m-%d %H:%M')) %>
-            <% end %>
-          </small></p>
         <% end %>
+        <%= textilizable summary.summary %>
+        <p><small>
+          <% if summary.updated_by.present? %>
+            <%= t('redmine_ai_summary.labels.updated_by_on', name: summary.updater&.name, date: summary.updated_at&.strftime('%Y-%m-%d %H:%M')) %>
+          <% else %>
+            <%= t('redmine_ai_summary.labels.created_by_on', name: summary.creator&.name, date: summary.created_at&.strftime('%Y-%m-%d %H:%M')) %>
+          <% end %>
+        </small></p>
       </div>
     <% else %>
-      <p><%= t('redmine_ai_summary.text.no_summary_available') %></p>
+      <% if summary&.status != 'generating' %>
+        <p><%= t('redmine_ai_summary.text.no_summary_available') %></p>
+      <% end %>
     <% end %>
   </div>
 </div>

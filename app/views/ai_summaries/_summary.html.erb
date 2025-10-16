@@ -1,3 +1,14 @@
+<style>
+  .summary-stale {
+    opacity: 0.5;
+  }
+  .generating-text {
+    margin-left: 10px;
+    font-style: italic;
+    color: #777;
+  }
+</style>
+
 <div id="issue-summary-container">
   <%= render partial: 'ai_summaries/summary_content', locals: { issue: @issue } %>
 </div>

@@ -9,4 +9,8 @@ class IssueSummary < ActiveRecord::Base
   def up_to_date?
     status == 'up_to_date'
   end
+
+  def recent?
+    updated_at > 7.days.ago
+  end
 end
