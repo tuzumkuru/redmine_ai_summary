@@ -24,7 +24,7 @@
     </p>
 
     <% if summary&.summary.present? %>
-      <div class="wiki <%= 'summary-stale' if ['generating', 'stale'].include?(summary.status) %>">
+      <div class="wiki <%= 'summary-generating' if summary.status == 'generating' %>">
         <% if summary.status == 'stale' %>
           <p class="warning"><%= t('redmine_ai_summary.text.summary_is_stale') %></p>
         <% end %>

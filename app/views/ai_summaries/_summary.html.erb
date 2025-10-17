@@ -1,5 +1,5 @@
 <style>
-  .summary-stale {
+  .summary-generating {
     opacity: 0.5;
   }
   .generating-text {
@@ -19,16 +19,19 @@
     var issueId = <%= @issue.id %>;
     var pollingInterval;
 
+    function startPolling() {
+      if (pollingInterval) return;
+
+      pollingInterval = setInterval(pollSummaryStatus, 3000);
+    }
+
+    function stopPolling() {
+      clearInterval(pollingInterval);
+      pollingInterval = null;
+    }
+
     function pollSummaryStatus() {
       if (document.hidden) {
-        return;
-      }
-
-      var summaryElement = container.querySelector('#issue-summary');
-      var currentStatus = summaryElement ? summaryElement.dataset.status : null;
-
-      if (currentStatus === 'up_to_date') {
-        clearInterval(pollingInterval);
         return;
       }
 
@@ -37,22 +40,27 @@
           return response.text();
         })
         .then(function(html) {
-          var newContainer = document.createElement('div');
-          newContainer.innerHTML = html;
-          var newSummaryElement = newContainer.querySelector('#issue-summary');
-          var newStatus = newSummaryElement ? newSummaryElement.dataset.status : null;
-
           container.innerHTML = html;
-
+          var newStatus = container.querySelector('#issue-summary').dataset.status;
           if (newStatus === 'up_to_date') {
-            clearInterval(pollingInterval);
+            stopPolling();
           }
         });
     }
 
-    var initialStatus = container.querySelector('#issue-summary').dataset.status;
-    if (initialStatus === 'generating' || initialStatus === 'stale') {
-      pollingInterval = setInterval(pollSummaryStatus, 5000);
+    // Start polling on page load if summary is being generated
+    if (container.querySelector('#issue-summary').dataset.status === 'generating') {
+      startPolling();
     }
+
+    // Handle click on the generate button
+    document.addEventListener('click', function(event) {
+      if (event.target && event.target.id === 'generate-summary-button') {
+        // Use a short delay to allow the AJAX request to complete and update the status
+        setTimeout(function() {
+          startPolling();
+        }, 500);
+      }
+    });
   })();
 </script>
