@@ -31,7 +31,9 @@
         <% if summary.status == 'stale' %>
           <div class="warning">
             <%= t('redmine_ai_summary.text.summary_is_stale') %>
-            <%= link_to t('redmine_ai_summary.buttons.regenerate'), issue_ai_summaries_path(issue), method: :post, remote: true, class: 'icon icon-summary', id: 'generate-summary-button' %>
+            <% if User.current.allowed_to?(:generate_issue_summary, issue.project) %>
+              <%= link_to t('redmine_ai_summary.buttons.regenerate'), issue_ai_summaries_path(issue), method: :post, remote: true, class: 'icon icon-summary', id: 'generate-summary-button' %>
+            <% end %>
           </div>
         <% end %>
         <%= textilizable summary.summary %>
