@@ -13,4 +13,8 @@ class IssueSummary < ActiveRecord::Base
   def recent?
     updated_at > 7.days.ago
   end
+
+  def self.preloaded_for_render
+    includes(:creator, :updater).first
+  end
 end

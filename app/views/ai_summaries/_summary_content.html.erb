@@ -1,11 +1,11 @@
-<% summary = @issue.issue_summary %>
+<%# locals: (issue:, summary:) %>
 <div id="issue-summary" data-status="<%= summary&.status || 'new' %>">
   <hr />
   <div class="description">
     <div class="contextual">
-      <% if User.current.allowed_to?(:generate_issue_summary, @issue.project) %>
+      <% if User.current.allowed_to?(:generate_issue_summary, issue.project) && summary&.status != 'stale' %>
         <%= link_to t('redmine_ai_summary.buttons.generate_summary'),
-            issue_ai_summaries_path(@issue),
+            issue_ai_summaries_path(issue),
             method: :post,
             remote: true,
             class: 'icon icon-summary',
@@ -28,7 +28,7 @@
         <% if summary.status == 'stale' %>
           <div class="warning">
             <%= t('redmine_ai_summary.text.summary_is_stale') %>
-            <%= link_to t('redmine_ai_summary.buttons.regenerate'), issue_ai_summaries_path(@issue), method: :post, remote: true, class: 'icon icon-summary', id: 'generate-summary-button' %>
+            <%= link_to t('redmine_ai_summary.buttons.regenerate'), issue_ai_summaries_path(issue), method: :post, remote: true, class: 'icon icon-summary', id: 'generate-summary-button' %>
           </div>
         <% end %>
         <%= textilizable summary.summary %>
