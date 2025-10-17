@@ -31,6 +31,7 @@ tr:
       summary_is_old: "(Eski)"
       are_you_sure_generate_summary: "Bu konu için bir özet oluşturmak istediğinizden emin misiniz?"
     notices:
+      summary_generated: "Özet oluşturuldu."
     flash:
       summary_created: "Özet başarıyla oluşturuldu."
       summary_creation_failed: "Özet oluşturulamadı."

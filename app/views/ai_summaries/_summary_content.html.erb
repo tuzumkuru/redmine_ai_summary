@@ -20,6 +20,8 @@
       <% end %>
     </p>
 
+    <div id="summary-notice" style="display:none;"></div>
+
     <% if summary&.status == 'generating' %>
         <div class="warning">
             <%= t('redmine_ai_summary.text.generating_summary') %>

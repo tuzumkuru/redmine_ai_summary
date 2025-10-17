@@ -30,10 +30,24 @@
       pollingInterval = null;
     }
 
+    function showSuccessMessage() {
+      var noticeElement = document.getElementById('summary-notice');
+      if (noticeElement) {
+        noticeElement.innerText = '<%= t('redmine_ai_summary.notices.summary_generated') %>';
+        noticeElement.className = 'flash notice';
+        noticeElement.style.display = 'block';
+        setTimeout(function() {
+          noticeElement.style.display = 'none';
+        }, 3000);
+      }
+    }
+
     function pollSummaryStatus() {
       if (document.hidden) {
         return;
       }
+
+      var wasGenerating = container.querySelector('#issue-summary').dataset.status === 'generating';
 
       fetch('/issues/' + issueId + '/ai_summaries/content')
         .then(function(response) { return response.text(); })
@@ -46,6 +60,9 @@
 
           if (newStatus === 'up_to_date') {
             stopPolling();
+            if (wasGenerating) {
+              showSuccessMessage();
+            }
           }
         });
     }
