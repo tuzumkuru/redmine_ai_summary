@@ -30,10 +30,10 @@
 
     <% if summary&.summary.present? %>
       <div class="wiki <%= 'summary-generating' if summary.status == 'generating' %>">
-        <% if summary.status == 'stale' %>
+        <% if summary.status == 'stale' || summary.status == 'error' %>
           <div class="warning">
-            <% if summary.error_message.present? %>
-              <%= t('redmine_ai_summary.notices.summary_failed', error: summary.error_message) %>
+            <% if summary.status == 'error' %>
+              <%= t('redmine_ai_summary.notices.summary_failed') %>
             <% else %>
               <%= t('redmine_ai_summary.text.summary_is_stale') %>
             <% end %>

@@ -30,11 +30,11 @@
       pollingInterval = null;
     }
 
-    function showSuccessMessage() {
+    function showFlashMessage(message, type) {
       var noticeElement = document.getElementById('summary-notice');
       if (noticeElement) {
-        noticeElement.innerText = '<%= t('redmine_ai_summary.notices.summary_generated') %>';
-        noticeElement.className = 'flash notice';
+        noticeElement.innerText = message;
+        noticeElement.className = 'flash ' + type;
         noticeElement.style.display = 'block';
         setTimeout(function() {
           noticeElement.style.display = 'none';
@@ -61,7 +61,12 @@
           if (newStatus === 'up_to_date') {
             stopPolling();
             if (wasGenerating) {
-              showSuccessMessage();
+              showFlashMessage('<%= t('redmine_ai_summary.notices.summary_generated') %>', 'notice');
+            }
+          } else if (newStatus === 'error') {
+            stopPolling();
+            if (wasGenerating) {
+              showFlashMessage('<%= t('redmine_ai_summary.notices.summary_failed') %>', 'error');
             }
           }
         });

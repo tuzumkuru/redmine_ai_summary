@@ -32,7 +32,7 @@ en:
       are_you_sure_generate_summary: "Are you sure you want to generate a summary for this issue?"
     notices:
       summary_generated: "Summary is generated."
-      summary_failed: "Summary generation failed: %{error}"
+      summary_failed: "Summary generation failed. Please check the logs."
     flash:
       summary_created: "Summary created successfully."
       summary_creation_failed: "Failed to create summary."
