@@ -18,6 +18,7 @@ en:
       auto_requires_existing_summary_description: "If enabled, automatic generation runs only after a manual summary was created at least once for the issue."
     buttons:
       generate_summary: "Generate Summary"
+      regenerate: "Regenerate"
       reset_prompt: "Reset to Default Prompt"
     labels:
       issue_summary: "Issue Summary"

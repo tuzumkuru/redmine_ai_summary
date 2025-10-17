@@ -1,1 +1,2 @@
 $("#issue-summary-container").html("<%= j render(partial: 'ai_summaries/summary_content', locals: { issue: @issue }) %>");
+window.startSummaryPolling();

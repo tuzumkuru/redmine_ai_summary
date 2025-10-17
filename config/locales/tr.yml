@@ -18,6 +18,7 @@ tr:
       auto_requires_existing_summary_description: "Etkinleştirildiğinde, otomatik oluşturma yalnızca konu için en az bir kez manuel özet oluşturulduktan sonra çalışır."
     buttons:
       generate_summary: "Özet Oluştur"
+      regenerate: "Yeniden Oluştur"
       reset_prompt: "Varsayılan İstem'e Sıfırla"
     labels:
       issue_summary: "Konu Özeti"

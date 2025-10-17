@@ -19,9 +19,8 @@
     var issueId = <%= @issue.id %>;
     var pollingInterval;
 
-    function startPolling() {
+    window.startSummaryPolling = function() {
       if (pollingInterval) return;
-
       pollingInterval = setInterval(pollSummaryStatus, 3000);
     }
 
@@ -36,31 +35,23 @@
       }
 
       fetch('/issues/' + issueId + '/ai_summaries/content')
-        .then(function(response) {
-          return response.text();
-        })
+        .then(function(response) { return response.text(); })
         .then(function(html) {
+          var tempDiv = document.createElement('div');
+          tempDiv.innerHTML = html;
+
+          var newStatus = tempDiv.querySelector('#issue-summary').dataset.status;
           container.innerHTML = html;
-          var newStatus = container.querySelector('#issue-summary').dataset.status;
+
           if (newStatus === 'up_to_date') {
             stopPolling();
           }
         });
     }
 
-    // Start polling on page load if summary is being generated
+    // Start polling on page load if summary is already being generated
     if (container.querySelector('#issue-summary').dataset.status === 'generating') {
-      startPolling();
+      window.startSummaryPolling();
     }
-
-    // Handle click on the generate button
-    document.addEventListener('click', function(event) {
-      if (event.target && event.target.id === 'generate-summary-button') {
-        // Use a short delay to allow the AJAX request to complete and update the status
-        setTimeout(function() {
-          startPolling();
-        }, 500);
-      }
-    });
   })();
 </script>
