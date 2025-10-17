@@ -11,7 +11,11 @@ module RedmineAiSummary
       def generate_summary_after_update
         return if issue_summary.nil?
 
-        issue_summary.update(status: 'stale')
+        if Setting.plugin_redmine_ai_summary['generate_on_update'].to_s == '1'
+          GenerateSummaryJob.perform_later(self.id, User.current.id)
+        else
+          issue_summary.update(status: 'stale')
+        end
       end
     end
   end

@@ -32,7 +32,7 @@ tr:
       are_you_sure_generate_summary: "Bu konu için bir özet oluşturmak istediğinizden emin misiniz?"
     notices:
       summary_generated: "Özet oluşturuldu."
-      summary_failed: "Özet oluşturma başarısız oldu. Lütfen kayıtları kontrol edin."
+      summary_failed: "Özet oluşturulurken bir hata oluştu."
     flash:
       summary_created: "Özet başarıyla oluşturuldu."
       summary_creation_failed: "Özet oluşturulamadı."
