@@ -17,15 +17,18 @@
   (function() {
     var container = document.getElementById('issue-summary-container');
     var issueId = <%= @issue.id %>;
-    var initialStatus = container.querySelector('#issue-summary').dataset.status;
+    var pollingInterval;
 
     function pollSummaryStatus() {
       if (document.hidden) {
         return;
       }
 
-      var currentStatus = container.querySelector('#issue-summary').dataset.status;
+      var summaryElement = container.querySelector('#issue-summary');
+      var currentStatus = summaryElement ? summaryElement.dataset.status : null;
+
       if (currentStatus === 'up_to_date') {
+        clearInterval(pollingInterval);
         return;
       }
 
@@ -34,12 +37,22 @@
           return response.text();
         })
         .then(function(html) {
+          var newContainer = document.createElement('div');
+          newContainer.innerHTML = html;
+          var newSummaryElement = newContainer.querySelector('#issue-summary');
+          var newStatus = newSummaryElement ? newSummaryElement.dataset.status : null;
+
           container.innerHTML = html;
+
+          if (newStatus === 'up_to_date') {
+            clearInterval(pollingInterval);
+          }
         });
     }
 
+    var initialStatus = container.querySelector('#issue-summary').dataset.status;
     if (initialStatus === 'generating' || initialStatus === 'stale') {
-      setInterval(pollSummaryStatus, 5000);
+      pollingInterval = setInterval(pollSummaryStatus, 5000);
     }
   })();
 </script>

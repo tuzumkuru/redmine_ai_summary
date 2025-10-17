@@ -9,9 +9,9 @@ module RedmineAiSummary
       end
 
       def generate_summary_after_update
-        if Setting.plugin_redmine_ai_summary['generate_on_update'].to_s == '1' && issue_summary.present?
-          issue_summary.update(status: 'stale')
-        end
+        return if issue_summary.nil?
+
+        issue_summary.update(status: 'stale')
       end
     end
   end
