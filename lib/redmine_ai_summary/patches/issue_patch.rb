@@ -9,14 +9,14 @@ module RedmineAiSummary
       end
 
       def generate_summary_after_update
-        return if issue_summary.nil?
+        return unless Setting.plugin_redmine_ai_summary['generate_on_update'].to_s == '1'
+        return unless self.project&.module_enabled?(:ai_summary)
 
-        if Setting.plugin_redmine_ai_summary['generate_on_update'].to_s == '1'
-          issue_summary.update(status: 'generating')
-          GenerateSummaryJob.perform_later(self.id, User.current.id)
-        else
-          issue_summary.update(status: 'stale')
-        end
+        summary = IssueSummary.find_or_initialize_by(issue_id: self.id)
+        return if summary.persisted? && summary.up_to_date?
+
+        summary.update(status: 'generating')
+        GenerateSummaryJob.perform_later(self.id, User.current.id)
       end
     end
   end
