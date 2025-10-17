@@ -61,17 +61,20 @@ module RedmineAiSummary
         end
 
         if summary.save
-          summary
+          return [true, summary]
         else
-          Rails.logger.error "Failed to save summary for issue ##{issue.id}: #{summary.errors.full_messages.join(', ')}"
-          nil
+          error_msg = "Failed to save summary: #{summary.errors.full_messages.join(', ')}"
+          Rails.logger.error error_msg
+          return [false, error_msg]
         end
       rescue Faraday::UnauthorizedError => e
-        Rails.logger.error "Unauthorized access: #{e.message}"
-        nil
+        error_msg = "Unauthorized access. Please check your API key and endpoint."
+        Rails.logger.error "#{error_msg} Original error: #{e.message}"
+        return [false, error_msg]
       rescue StandardError => e
-        Rails.logger.error "Error generating summary: #{e.message}"
-        nil
+        error_msg = "An unexpected error occurred during summary generation."
+        Rails.logger.error "#{error_msg} Original error: #{e.message}"
+        return [false, error_msg]
       end
     end
 

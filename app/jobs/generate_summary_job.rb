@@ -8,15 +8,17 @@ class GenerateSummaryJob < ActiveJob::Base
 
     summary = IssueSummary.find_or_initialize_by(issue_id: issue.id)
     summary.status = 'generating'
+    summary.error_message = nil
     summary.save!
 
-    generated_summary = RedmineAiSummary::SummaryGenerator.generate(issue, user)
+    success, result = RedmineAiSummary::SummaryGenerator.generate(issue, user)
 
-    if generated_summary
+    if success
       summary.status = 'up_to_date'
       summary.save!
     else
       summary.status = 'stale'
+      summary.error_message = result
       summary.save!
     end
   end
