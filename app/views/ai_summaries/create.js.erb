@@ -1,3 +1,3 @@
-<% summary = @issue.issue_summary ? @issue.issue_summary.preloaded_for_render : nil %>
+<% summary = IssueSummary.includes(:creator, :updater).find_by(issue_id: @issue.id) %>
 $("#issue-summary-container").html("<%= j render(partial: 'ai_summaries/summary_content', locals: { issue: @issue, summary: summary }) %>");
 window.startSummaryPolling();

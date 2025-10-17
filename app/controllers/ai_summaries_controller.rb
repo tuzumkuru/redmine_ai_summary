@@ -3,7 +3,7 @@ class AiSummariesController < ApplicationController
   before_action :check_create_permission, only: [:create]
 
   def content
-    summary = @issue.issue_summary ? @issue.issue_summary.preloaded_for_render : nil
+    summary = IssueSummary.includes(:creator, :updater).find_by(issue_id: @issue.id)
     render partial: 'ai_summaries/summary_content', locals: { issue: @issue, summary: summary }
   end
 
