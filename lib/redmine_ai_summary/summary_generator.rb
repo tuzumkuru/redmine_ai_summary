@@ -1,6 +1,6 @@
 module RedmineAiSummary
   class SummaryGenerator
-    def self.generate(issue)
+    def self.generate(issue, user)
       client = initialize_openai_client
 
       issue_data = {
@@ -54,24 +54,24 @@ module RedmineAiSummary
         summary.summary = summary_content
 
         if summary.new_record?
-          summary.created_by = User.current.id
+          summary.created_by = user.id
         else
           summary.updated_at = Time.now
-          summary.updated_by = User.current.id
+          summary.updated_by = user.id
         end
 
         if summary.save
-          summary
+          return [true, summary]
         else
-          Rails.logger.error "Failed to save summary for issue ##{issue.id}: #{summary.errors.full_messages.join(', ')}"
-          nil
+          Rails.logger.error "Failed to save summary: #{summary.errors.full_messages.join(', ')}"
+          return [false, nil]
         end
       rescue Faraday::UnauthorizedError => e
-        Rails.logger.error "Unauthorized access: #{e.message}"
-        nil
+        Rails.logger.error "Unauthorized access. Please check your API key and endpoint. Original error: #{e.message}"
+        return [false, nil]
       rescue StandardError => e
-        Rails.logger.error "Error generating summary: #{e.message}"
-        nil
+        Rails.logger.error "An unexpected error occurred during summary generation. Original error: #{e.message}"
+        return [false, nil]
       end
     end
 

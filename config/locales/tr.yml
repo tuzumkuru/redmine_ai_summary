@@ -18,6 +18,7 @@ tr:
       auto_requires_existing_summary_description: "Etkinleştirildiğinde, otomatik oluşturma yalnızca konu için en az bir kez manuel özet oluşturulduktan sonra çalışır."
     buttons:
       generate_summary: "Özet Oluştur"
+      regenerate: "Yeniden Oluştur"
       reset_prompt: "Varsayılan İstem'e Sıfırla"
     labels:
       issue_summary: "Konu Özeti"
@@ -26,8 +27,12 @@ tr:
     text:
       no_summary_available: "Henüz özet mevcut değil."
       generating_summary: "Özet oluşturuluyor..."
+      summary_is_stale: "Özet güncel değil ve yeniden oluşturulması gerekiyor."
+      summary_is_old: "(Eski)"
       are_you_sure_generate_summary: "Bu konu için bir özet oluşturmak istediğinizden emin misiniz?"
     notices:
+      summary_generated: "Özet oluşturuldu."
+      summary_failed: "Özet oluşturulurken bir hata oluştu."
     flash:
       summary_created: "Özet başarıyla oluşturuldu."
       summary_creation_failed: "Özet oluşturulamadı."

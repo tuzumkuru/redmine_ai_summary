@@ -1,14 +1,21 @@
 class AiSummariesController < ApplicationController
-  before_action :find_issue, only: [:create]
+  before_action :find_issue, only: [:create, :content]
   before_action :check_create_permission, only: [:create]
 
-  def create
-    @summary = RedmineAiSummary::SummaryGenerator.generate(@issue)
+  def content
+    summary = IssueSummary.includes(:creator, :updater).find_by(issue_id: @issue.id)
+    render partial: 'ai_summaries/summary_content', locals: { issue: @issue, summary: summary }
+  end
 
-    if @summary&.persisted?
+  def create
+    @summary = IssueSummary.find_or_initialize_by(issue_id: @issue.id)
+    @summary.status = 'generating'
+
+    if @summary.save
+      GenerateSummaryJob.perform_later(@issue.id, User.current.id)
       handle_success
     else
-      handle_error(["Failed to generate summary."])
+      handle_error(@summary.errors.full_messages)
     end
   end
 

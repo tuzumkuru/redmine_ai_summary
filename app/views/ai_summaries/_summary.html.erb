@@ -1,33 +1,78 @@
 <style>
-  .disabled {
-    pointer-events: none;
+  .summary-generating {
     opacity: 0.5;
+  }
+  .generating-text {
+    margin-left: 10px;
+    font-style: italic;
+    color: #777;
   }
 </style>
 
 <div id="issue-summary-container">
-  <%= render partial: 'ai_summaries/summary_content', locals: { issue: @issue } %>
+  <% summary = IssueSummary.includes(:creator, :updater).find_by(issue_id: @issue.id) %>
+  <%= render partial: 'ai_summaries/summary_content', locals: { issue: @issue, summary: summary } %>
 </div>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    document.body.addEventListener('ajax:beforeSend', function(event) {
-      if (event.target.id === 'generate-summary-button') {
-        event.target.innerText = '<%= t("redmine_ai_summary.text.generating_summary") %>';
-        event.target.classList.add('disabled');
-      }
-    });
+  (function() {
+    var container = document.getElementById('issue-summary-container');
+    var issueId = <%= @issue.id %>;
+    var pollingInterval;
 
-    document.body.addEventListener('ajax:complete', function(event) {
-      if (event.target.id === 'generate-summary-button') {
-        event.target.innerText = '<%= t("redmine_ai_summary.buttons.generate_summary") %>';
-        event.target.classList.remove('disabled');
+    window.startSummaryPolling = function() {
+      if (pollingInterval) return;
+      pollingInterval = setInterval(pollSummaryStatus, 3000);
+    }
 
-        if (event.detail[0].status !== 200) {
-          var errors = JSON.parse(event.detail[0].responseText).error;
-          alert(errors.join('\n'));
-        }
+    function stopPolling() {
+      clearInterval(pollingInterval);
+      pollingInterval = null;
+    }
+
+    function showFlashMessage(message, type) {
+      var noticeElement = document.getElementById('summary-notice');
+      if (noticeElement) {
+        noticeElement.innerText = message;
+        noticeElement.className = 'flash ' + type;
+        noticeElement.style.display = 'block';
+        setTimeout(function() {
+          noticeElement.style.display = 'none';
+        }, 3000);
       }
-    });
-  });
+    }
+
+    function pollSummaryStatus() {
+      if (document.hidden) {
+        return;
+      }
+
+      var wasGenerating = container.querySelector('#issue-summary').dataset.status === 'generating';
+
+      fetch('/issues/' + issueId + '/ai_summaries/content')
+        .then(function(response) { return response.text(); })
+        .then(function(html) {
+          var tempDiv = document.createElement('div');
+          tempDiv.innerHTML = html;
+
+          var newStatus = tempDiv.querySelector('#issue-summary').dataset.status;
+          container.innerHTML = html;
+
+          if (newStatus === 'up_to_date') {
+            stopPolling();
+            if (wasGenerating) {
+              showFlashMessage('<%= t('redmine_ai_summary.notices.summary_generated') %>', 'notice');
+            }
+          } else if (wasGenerating && newStatus === 'stale') {
+            stopPolling();
+            showFlashMessage('<%= t('redmine_ai_summary.notices.summary_failed') %>', 'error');
+          }
+        });
+    }
+
+    // Start polling on page load if summary is already being generated
+    if (container.querySelector('#issue-summary').dataset.status === 'generating') {
+      window.startSummaryPolling();
+    }
+  })();
 </script>

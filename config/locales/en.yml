@@ -18,6 +18,7 @@ en:
       auto_requires_existing_summary_description: "If enabled, automatic generation runs only after a manual summary was created at least once for the issue."
     buttons:
       generate_summary: "Generate Summary"
+      regenerate: "Regenerate"
       reset_prompt: "Reset to Default Prompt"
     labels:
       issue_summary: "Issue Summary"
@@ -26,8 +27,12 @@ en:
     text:
       no_summary_available: "No summary available yet."
       generating_summary: "Generating summary..."
+      summary_is_stale: "The summary is outdated and needs to be regenerated."
+      summary_is_old: "(Old)"
       are_you_sure_generate_summary: "Are you sure you want to generate a summary for this issue?"
     notices:
+      summary_generated: "Summary is generated."
+      summary_failed: "An error occurred while generating the summary."
     flash:
       summary_created: "Summary created successfully."
       summary_creation_failed: "Failed to create summary."
