@@ -30,7 +30,7 @@
 
     <% if summary&.summary.present? %>
       <div class="wiki <%= 'summary-generating' if summary.status == 'generating' %>">
-        <% if ['stale', 'error'].include?(summary.status) %>
+        <% if summary.status == 'stale' %>
           <div class="warning">
             <%= t('redmine_ai_summary.text.summary_is_stale') %>
             <% if User.current.allowed_to?(:generate_issue_summary, issue.project) %>

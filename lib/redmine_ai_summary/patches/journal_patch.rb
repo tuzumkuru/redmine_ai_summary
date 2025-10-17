@@ -24,7 +24,7 @@ module RedmineAiSummary
               return unless summary.persisted?
             end
 
-            summary.update(status: 'stale')
+            summary.update(status: 'generating')
             GenerateSummaryJob.perform_later(issue.id, self.user_id)
           end
         end
