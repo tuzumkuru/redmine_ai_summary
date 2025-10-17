@@ -63,11 +63,9 @@
             if (wasGenerating) {
               showFlashMessage('<%= t('redmine_ai_summary.notices.summary_generated') %>', 'notice');
             }
-          } else if (newStatus === 'error') {
+          } else if (wasGenerating && newStatus === 'stale') {
             stopPolling();
-            if (wasGenerating) {
-              showFlashMessage('<%= t('redmine_ai_summary.notices.summary_failed') %>', 'error');
-            }
+            showFlashMessage('<%= t('redmine_ai_summary.notices.summary_failed') %>', 'error');
           }
         });
     }

@@ -15,7 +15,7 @@ class GenerateSummaryJob < ActiveJob::Base
     if success
       summary.update(status: 'up_to_date')
     else
-      summary.update(status: 'error')
+      summary.update(status: 'stale')
     end
   end
 end
