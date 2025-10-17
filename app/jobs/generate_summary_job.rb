@@ -10,12 +10,12 @@ class GenerateSummaryJob < ActiveJob::Base
     summary.status = 'generating'
     summary.save!
 
-    success, _ = RedmineAiSummary::SummaryGenerator.generate(issue, user)
+    success, generated_summary = RedmineAiSummary::SummaryGenerator.generate(issue, user)
 
     if success
-      summary.update(status: 'up_to_date')
+      generated_summary.update(status: 'up_to_date')
     else
-      summary.update(status: 'stale')
+      summary.reload.update(status: 'stale')
     end
   end
 end
