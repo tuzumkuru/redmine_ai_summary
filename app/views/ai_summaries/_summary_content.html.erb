@@ -3,25 +3,28 @@
   <hr />
   <div class="description">
     <div class="contextual">
-      <% if User.current.allowed_to?(:generate_issue_summary, issue.project) && summary&.status != 'stale' %>
+      <% if User.current.allowed_to?(:generate_issue_summary, issue.project) && !['stale', 'generating'].include?(summary&.status) %>
         <%= link_to t('redmine_ai_summary.buttons.generate_summary'),
             issue_ai_summaries_path(issue),
             method: :post,
             remote: true,
             class: 'icon icon-summary',
             id: 'generate-summary-button',
-            disabled: summary&.status == 'generating',
             data: { confirm: t('redmine_ai_summary.text.are_you_sure_generate_summary') } %>
       <% end %>
     </div>
     <p>
       <strong><%= t('redmine_ai_summary.labels.issue_summary') %></strong>
-      <% if summary&.status == 'generating' %>
-        <small class="generating-text"><%= t('redmine_ai_summary.text.generating_summary') %></small>
-      <% elsif summary&.up_to_date? && !summary&.recent? %>
+      <% if summary&.up_to_date? && !summary&.recent? %>
         <small class="generating-text"><%= t('redmine_ai_summary.text.summary_is_old') %></small>
       <% end %>
     </p>
+
+    <% if summary&.status == 'generating' %>
+        <div class="warning">
+            <%= t('redmine_ai_summary.text.generating_summary') %>
+        </div>
+    <% end %>
 
     <% if summary&.summary.present? %>
       <div class="wiki <%= 'summary-generating' if summary.status == 'generating' %>">
