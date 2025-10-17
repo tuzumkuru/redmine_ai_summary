@@ -3,7 +3,11 @@ class AiSummariesController < ApplicationController
   before_action :check_create_permission, only: [:create]
 
   def content
-    summary = IssueSummary.includes(:creator, :updater).find_by(issue_id: @issue.id)
+    summary = IssueSummary.find_by(issue_id: @issue.id)
+    if summary
+      association_to_load = summary.updated_by ? :updater : :creator
+      ActiveRecord::Associations::Preloader.new(records: [summary], associations: association_to_load).call
+    end
     render partial: 'ai_summaries/summary_content', locals: { issue: @issue, summary: summary }
   end
 
