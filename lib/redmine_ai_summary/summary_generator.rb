@@ -21,11 +21,18 @@ module RedmineAiSummary
             notes: journal.notes,
             created_on: journal.created_on,
             details: journal.details.map do |detail|
+              old_value, new_value = resolve_detail_values(detail)
+              prop_key = detail.prop_key
+              if detail.property == 'cf'
+                custom_field = CustomField.find_by(id: detail.prop_key)
+                prop_key = custom_field.name if custom_field
+              end
+
               {
                 property: detail.property,
-                prop_key: detail.prop_key,
-                old_value: detail.old_value,
-                value: detail.value
+                prop_key: prop_key,
+                old_value: old_value,
+                value: new_value
               }
             end
           }
@@ -87,6 +94,45 @@ module RedmineAiSummary
       options[:uri_base] = api_endpoint if api_endpoint.present?
 
       OpenAI::Client.new(options)
+    end
+
+    def self.resolve_detail_values(detail)
+      old_value = detail.old_value
+      new_value = detail.value
+
+      if detail.property == 'cf'
+        custom_field = CustomField.find_by(id: detail.prop_key)
+        if custom_field
+          old_value = custom_field.value_to_string(detail.old_value)
+          new_value = custom_field.value_to_string(detail.value)
+        end
+        return old_value, new_value
+      end
+
+      return old_value, new_value unless detail.property == 'attr'
+
+      case detail.prop_key
+      when 'status_id'
+        old_value = IssueStatus.find_by(id: detail.old_value)&.name
+        new_value = IssueStatus.find_by(id: detail.value)&.name
+      when 'priority_id'
+        old_value = IssuePriority.find_by(id: detail.old_value)&.name
+        new_value = IssuePriority.find_by(id: detail.value)&.name
+      when 'tracker_id'
+        old_value = Tracker.find_by(id: detail.old_value)&.name
+        new_value = Tracker.find_by(id: detail.value)&.name
+      when 'assigned_to_id'
+        old_value = User.find_by(id: detail.old_value)&.name
+        new_value = User.find_by(id: detail.value)&.name
+      when 'category_id'
+        old_value = IssueCategory.find_by(id: detail.old_value)&.name
+        new_value = IssueCategory.find_by(id: detail.value)&.name
+      when 'fixed_version_id'
+        old_value = Version.find_by(id: detail.old_value)&.name
+        new_value = Version.find_by(id: detail.value)&.name
+      end
+
+      return old_value, new_value
     end
   end
 end
