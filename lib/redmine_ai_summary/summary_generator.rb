@@ -22,9 +22,15 @@ module RedmineAiSummary
             created_on: journal.created_on,
             details: journal.details.map do |detail|
               old_value, new_value = resolve_detail_values(detail)
+              prop_key = detail.prop_key
+              if detail.property == 'cf'
+                custom_field = CustomField.find_by(id: detail.prop_key)
+                prop_key = custom_field.name if custom_field
+              end
+
               {
                 property: detail.property,
-                prop_key: detail.prop_key,
+                prop_key: prop_key,
                 old_value: old_value,
                 value: new_value
               }
@@ -93,6 +99,15 @@ module RedmineAiSummary
     def self.resolve_detail_values(detail)
       old_value = detail.old_value
       new_value = detail.value
+
+      if detail.property == 'cf'
+        custom_field = CustomField.find_by(id: detail.prop_key)
+        if custom_field
+          old_value = custom_field.value_to_string(detail.old_value)
+          new_value = custom_field.value_to_string(detail.value)
+        end
+        return old_value, new_value
+      end
 
       return old_value, new_value unless detail.property == 'attr'
 
