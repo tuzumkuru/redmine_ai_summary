@@ -6,7 +6,7 @@ services:
     ports:
       - 3000:3000
     environment:
-      - REDMINE_PLUGINS_MIGRATE=true
+      - REDMINE_PLUGINS_MIGRATE:true
       - RAILS_ENV=development
     volumes:
       - ./.volumes/files:/usr/src/redmine/files
