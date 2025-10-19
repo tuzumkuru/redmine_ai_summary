@@ -14,10 +14,6 @@ RUN mkdir -p /usr/src/redmine/sqlite && chown -R 999:999 /usr/src/redmine/sqlite
 # Adjust Rails environment settings
 RUN sed -i '/^end$/i config.hosts.clear' /usr/src/redmine/config/environments/development.rb
 
-# Copy custom rake task
-COPY lib/tasks/create_test_data.rake lib/tasks/
-COPY lib/tasks/set_admin_password.rake lib/tasks/
-
 # Switch working directory
 WORKDIR /usr/src/redmine
 
