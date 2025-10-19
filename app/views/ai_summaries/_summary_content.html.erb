@@ -40,11 +40,7 @@
         <% end %>
         <%= textilizable summary.summary %>
         <p><small>
-          <% if summary.updated_by.present? %>
-            <%= t('redmine_ai_summary.labels.updated_by_on', name: summary.updater&.name, date: summary.updated_at&.strftime('%Y-%m-%d %H:%M')) %>
-          <% else %>
-            <%= t('redmine_ai_summary.labels.created_by_on', name: summary.creator&.name, date: summary.created_at&.strftime('%Y-%m-%d %H:%M')) %>
-          <% end %>
+          <%= t('redmine_ai_summary.labels.updated_by_on', name: summary.updater&.name, date: summary.updated_at&.strftime('%Y-%m-%d %H:%M')) %>
         </small></p>
       </div>
     <% else %>

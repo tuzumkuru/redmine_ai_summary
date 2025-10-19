@@ -10,7 +10,7 @@
 </style>
 
 <div id="issue-summary-container">
-  <% summary = IssueSummary.includes(:creator, :updater).find_by(issue_id: @issue.id) %>
+  <% summary = IssueSummary.includes(:updater).find_by(issue_id: @issue.id) %>
   <%= render partial: 'ai_summaries/summary_content', locals: { issue: @issue, summary: summary } %>
 </div>
 

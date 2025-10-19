@@ -59,13 +59,8 @@ module RedmineAiSummary
 
         summary = IssueSummary.find_or_initialize_by(issue_id: issue.id)
         summary.summary = summary_content
-
-        if summary.new_record?
-          summary.created_by = user.id
-        else
-          summary.updated_at = Time.now
-          summary.updated_by = user.id
-        end
+        summary.updated_at = Time.now
+        summary.updated_by = user.id
 
         if summary.save
           return [true, summary]

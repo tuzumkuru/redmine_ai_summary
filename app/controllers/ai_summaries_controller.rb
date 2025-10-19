@@ -10,6 +10,7 @@ class AiSummariesController < ApplicationController
   def create
     @summary = IssueSummary.find_or_initialize_by(issue_id: @issue.id)
     @summary.status = 'generating'
+    @summary.created_by ||= User.current.id
 
     if @summary.save
       GenerateSummaryJob.perform_later(@issue.id, User.current.id)
