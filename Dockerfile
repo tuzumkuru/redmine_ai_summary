@@ -23,11 +23,15 @@ WORKDIR /usr/src/redmine
 
 # Set up the entrypoint and commands
 CMD ["/bin/bash", "-c", " \
+    rm -f /usr/src/redmine/tmp/pids/server.pid && \
     export RAILS_ENV=development && \
     bundle install && \
     rails db:migrate && \
     rails redmine:plugins:migrate && \
-    echo 'en' | rails redmine:load_default_data && \
-    rails redmine:create_test_data && \
-    rails redmine:set_admin_password && \
+    if [ ! -f /usr/src/redmine/sqlite/.initialized ]; then \
+        echo 'en' | rails redmine:load_default_data && \
+        rails redmine:create_test_data && \
+        rails redmine:set_admin_password && \
+        touch /usr/src/redmine/sqlite/.initialized; \
+    fi && \
     rails server -e development -b 0.0.0.0"]
