@@ -9,14 +9,11 @@ module RedmineAiSummary
       end
 
       def generate_summary_after_update
+        # If there is an associated summary, mark it as stale on any issue save.
+        # However, do **not** overwrite a summary that is already being generated.
         return if issue_summary.nil?
-
-        if Setting.plugin_redmine_ai_summary['generate_on_update'].to_s == '1'
-          issue_summary.update(status: 'generating')
-          GenerateSummaryJob.perform_later(self.id, User.current.id)
-        else
-          issue_summary.update(status: 'stale')
-        end
+        return if issue_summary.status == 'generating'
+        issue_summary.update(status: 'stale')
       end
     end
   end
