@@ -29,6 +29,20 @@ This plugin for Redmine generates AI-powered summaries for issues, providing qui
     ```
 4.  **Restart Redmine**.
 
+## Configuration
+
+To configure the plugin, go to **Administration > Plugins** and click on **Configure** for the **Redmine AI Summary Plugin**.
+
+*   **Auto Generate**: Enable or disable automatic summary generation when a new note is added.
+*   **Auto-generate only if a summary exists**: If enabled, automatic generation will only run if a manual summary has been created for the issue at least once. 
+*   **API Endpoint**: The endpoint of your OpenAI-compatible API.
+*   **API Key**: Your API key. The key is stored securely and will be masked in the user interface.
+*   **Model**: The AI model to use for summary generation (e.g., `gpt-4o-mini`).
+*   **System Prompt**: The instructions given to the AI model on how to summarize the issue.
+*   **Max Tokens**: The maximum number of tokens for the generated summary.
+
+![Plugin Settings](docs/images/settings.png)
+
 ## Usage
 
 For the plugin to be active on a project, you must enable the **AI Summary** module in the project's settings.
@@ -43,23 +57,23 @@ For the plugin to be active on a project, you must enable the **AI Summary** mod
 2.  If you have the required permissions, you will see a "Generate Summary" button.
 3.  Click the button to generate a new summary. The latest summary will be saved and displayed.
 
+Before generating a summary, the issue page will look like this:
+
+![No Summary](docs/images/no_summary.png)
+
+While the summary is being generated, a loading indicator is displayed:
+
+![Generating Summary](docs/images/generating_summary.png)
+
+Once the summary is complete, it is displayed on the issue page:
+
+![Summary Generated](docs/images/summary_generated.png)
+
 ### Automatic Generation
 
 When *Auto‑Generate* is enabled, the plugin reacts to **any** journal entry created for an issue (notes, status changes, attachments, etc.). The journal’s `after_create` callback checks the plugin settings and, if allowed, creates or updates the `IssueSummary` and enqueues a background job to generate the AI summary.
 
 If the *Auto‑Generate only if a summary exists* option is turned on, the plugin will only run the generation when a manual summary has already been created for that issue.
-
-## Configuration
-
-To configure the plugin, go to **Administration > Plugins** and click on **Configure** for the **Redmine AI Summary Plugin**.
-
-*   **Auto Generate**: Enable or disable automatic summary generation when a new note is added.
-*   **Auto-generate only if a summary exists**: If enabled, automatic generation will only run if a manual summary has been created for the issue at least once. 
-*   **API Endpoint**: The endpoint of your OpenAI-compatible API.
-*   **API Key**: Your API key. The key is stored securely and will be masked in the user interface.
-*   **Model**: The AI model to use for summary generation (e.g., `gpt-4o-mini`).
-*   **System Prompt**: The instructions given to the AI model on how to summarize the issue.
-*   **Max Tokens**: The maximum number of tokens for the generated summary.
 
 ## Future Development
 
